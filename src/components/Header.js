@@ -1,12 +1,8 @@
 import React from "react";
-import {
-  AppBar,
-  Toolbar,
-  CssBaseline,
-  makeStyles,
-} from "@material-ui/core";
+import { AppBar, Toolbar, CssBaseline, makeStyles } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import Logo from "../images/ClassBuddi-logo.svg";
+import Avatar from "../images/Avatar.svg";
 
 const useStyles = makeStyles((theme) => ({
   navlinks: {
@@ -21,6 +17,13 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     height: "10vw",
     margin: "10%",
+  },
+  avatar: {
+    flexGrow: "1",
+    cursor: "pointer",
+    display: "flex",
+    height: "3.5vw",
+    marginRight: "2rem",
   },
   link: {
     textDecoration: "none",
@@ -61,6 +64,11 @@ function Navbar() {
             join
           </Link>
         </div>
+        {loginStatus && (
+          <Link to="/">
+            <img src={Avatar} alt="avatar" className={classes.avatar}></img>
+          </Link>
+        )}
       </Toolbar>
     </AppBar>
   );
