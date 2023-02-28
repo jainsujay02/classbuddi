@@ -2,11 +2,11 @@ import styled from "styled-components";
 
 const ErrorPageDiv = styled.div`
   width: max-width;
-  background: #f5f5f5;
+  background: #EEEEEE;
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
+  min-height: 80vh;
   font-family: Poppins, sans-serif;
 `;
 
