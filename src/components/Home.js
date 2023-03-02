@@ -1,10 +1,10 @@
-import Landing_Image from "./Landing_Image";
+import LandingImage from "./LandingImage";
 
 export default function Home() {
     return (
       <div className="App">
         <header className="App-header">
-          <Landing_Image/>
+          <LandingImage/>
         </header>
       </div>
     );
