@@ -14,7 +14,7 @@ const ErrorComponent = () => {
   return (
     <>
       <ErrorPageDiv>
-        <h3>Oops! Looks like there's nothing here :/</h3>
+        <h1>Oops! Looks like there's nothing here :/</h1>
       </ErrorPageDiv>
     </>
   );
