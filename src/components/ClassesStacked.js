@@ -87,7 +87,7 @@ const ClassesStacked = () => {
         justifyContent="center"
         alignItems="center"
         spacing={3}
-        marginTop={35}>
+        >
             <ClassBox>
 
                 <Grid container spacing={1}>
