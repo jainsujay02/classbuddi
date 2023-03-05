@@ -3,14 +3,17 @@ import { styled } from '@mui/system';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
+import ProfilePicture from "../images/ProfilePicture.svg";
 
 
-const ProfilePicture = styled(Avatar) ({
+const ProfilePictureContainer = styled(Avatar) ({
     marginTop: '90px',
     marginLeft: '110px',
     width: '96px',
     height: '94px',
 })
+
+
 
 const SaveContactButton = styled(Button) ({
     marginTop: '110px',
@@ -73,7 +76,7 @@ const NameBlock = () => {
     return (
         <Grid container spacing={2}>
             <Grid item xs={3}>
-            <ProfilePicture alt="Avatar" src={Avatar}> </ProfilePicture>
+            <ProfilePictureContainer alt="Avatar" src={ProfilePicture}> </ProfilePictureContainer>
             </Grid>
             <Grid item xs={3}>
                     <Box>
@@ -97,11 +100,7 @@ const NameBlock = () => {
         </Grid>
 
         
-        
-
-        
-
-
+    
     )
 }
 
