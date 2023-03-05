@@ -3,6 +3,7 @@ import Box from '@mui/material/Box';
 import styled from 'styled-components';
 import ClassesStacked from "./ClassesStacked";
 import InterestsList from './InterestsList';
+import SocialList from './SocialsList';
 import NameBlock from './NameBlock';
 
 const Bg = styled.div`
@@ -55,6 +56,7 @@ const ProfileOtherBackground = () => {
                 <p style={HeaderStyle}> Interests </p>
                 <InterestsList/>
                 <p style={HeaderStyle}> Contact Information </p>
+                <SocialList/>
             </ClassBox>
 
         </Bg>
