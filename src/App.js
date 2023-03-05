@@ -6,6 +6,7 @@ import Home from "./components/Home";
 import Footer from "./components/Footer";
 import Navbar from "./components/Header.js";
 import ErrorComponent from "./components/ErrorComponent";
+import ProfileForm from "./components/profileform"
 
 function App() {
   return (
