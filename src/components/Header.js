@@ -59,17 +59,9 @@ function Navbar() {
       if (user) {
         setLoginStatus(true);
         login(user);
-        // if (!newUser) {
-        //   navigate("/profile");
-        // }
-        // else {
-        //   // navigate to sign up page
-        //   navigate("/")
-        // }
       } else {
         setLoginStatus(false);
         logout();
-        // navigate("/");
       }
     });
   }, []);
