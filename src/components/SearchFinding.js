@@ -4,6 +4,7 @@ import TextField from '@mui/material/TextField';
 import styled from 'styled-components';
 import { Container } from '@mui/material';
 import Autocomplete from '@mui/material/Autocomplete';
+import * as React from 'react';
 
 const Bg = styled.div`
     background-color: #EEEEEE;
@@ -34,7 +35,6 @@ const Text1 = {
 
 const Text2 = {
     marginTop: '38px',
-    width: '328px',
     height: '36px',
     
     fontFamily: 'Poppins',
@@ -86,7 +86,8 @@ const CSClasses = [
     {label: 'CS 188 - Special topics in Computer Science'},
    ]
 
-const SearchLanding = () => {
+const SearchFinding = () => {
+    const [value, setValue] = React.useState(CSClasses[0].label); //dummy value for now, will need to feed in data as props from the backend
     return (
         <Bg>
             <Container fixed sx={{marginBottom: '50px', display: 'flex', marginLeft: '20%'}}>
@@ -94,6 +95,10 @@ const SearchLanding = () => {
                         <p style={Text1}> Find a class </p>
                         <Autocomplete
                         disablePortal
+                        value={value}
+                        onChange={(event, newValue) => {
+                            setValue(newValue.label);
+                        }}
                         id="combo-box-demo"
                         options={CSClasses}
                         ListboxProps={{
@@ -110,11 +115,11 @@ const SearchLanding = () => {
                         sx= {{backgroundColor: 'white'}}
                         label="Search for a course and find a classbuddi!" />}
                         />
-                        <p style={Text2}> Your current courseload: </p>
+                        <p style={Text2}> {`Results for ${value !== null ? `'${value}'` : '...'}`} </p>
                         <ClassesStacked/>
                     </Stack>
             </Container>
         </Bg>
     )
 }
-export default SearchLanding;
+export default SearchFinding;
