@@ -51,7 +51,7 @@ const Text2 = {
 }
 
 const CSClasses = [
-    {label: 'CS 1- Computer Science Seminar'},
+    {label: 'CS 1 - Computer Science Seminar'},
     {label: 'CS 30 - Principles & Practices of Computing'},
     {label: 'CS 31 - Intro to Com Sci I.'},
     {label: 'CS 32 - Intro to Com Sci II.'},
@@ -86,6 +86,14 @@ const CSClasses = [
     {label: 'CS 188 - Special topics in Computer Science  '},
    ]
 
+/*const useStyles = styles((theme) => ({     
+    comboOptions: {
+        fontFamily: 'Poppins',
+        fontStyle: 'normal',
+        fontSize: '20px'
+    }
+}));*/
+
 const SearchLanding = () => {
     return (
         <Bg>
@@ -96,8 +104,19 @@ const SearchLanding = () => {
                         disablePortal
                         id="combo-box-demo"
                         options={CSClasses}
-                        sx={{ width: 812}}
-                        renderInput={(params) => <TextField {...params} label="Search for a course and find a classbuddi!" />}
+                        ListboxProps={{
+                            sx: {fontFamily: 'Poppins', fontStyle: 'normal'},
+                          }}
+                          sx={{
+                            '& .MuiAutocomplete-input': {
+                            fontFamily: 'Poppins', fontStyle: 'normal'}, 
+                            width: 812
+                        }}
+                        renderInput={(params) => 
+                        <TextField 
+                        {...params} 
+                        sx= {{backgroundColor: 'white'}}
+                        label="Search for a course and find a classbuddi!" />}
                         />
                         <p style={Text2}> Your current courseload: </p>
                         <ClassesStacked/>
