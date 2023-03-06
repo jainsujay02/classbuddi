@@ -16,6 +16,7 @@ import {
   newUser,
 } from "./utils/firebase";
 import { onAuthStateChanged } from "firebase/auth";
+import { useAuth } from "./hooks/useAuth";
 
 const useStyles = makeStyles((theme) => ({
   navlinks: {
@@ -51,20 +52,24 @@ const useStyles = makeStyles((theme) => ({
 function Navbar() {
   const [loginStatus, setLoginStatus] = useState(false);
   const navigate = useNavigate();
+  const { login, logout } = useAuth();
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
+      console.log("Header user", user);
       if (user) {
         setLoginStatus(true);
-        if (!newUser) {
-          navigate("/dashboard");
-        }
-        else {
-          // navigate to sign up page
-          navigate("/")
-        }
+        login(user);
+        // if (!newUser) {
+        //   navigate("/profile");
+        // }
+        // else {
+        //   // navigate to sign up page
+        //   navigate("/")
+        // }
       } else {
         setLoginStatus(false);
-        navigate("/");
+        logout();
+        // navigate("/");
       }
     });
   }, []);
@@ -99,9 +104,14 @@ function Navbar() {
           {!loginStatus && (
             <Button
               variant="text"
-              onClick={() => {
-                const x = signInWithGoogle();
-                console.log(x);
+              onClick={async () => {
+                await signInWithGoogle();
+                console.log("returned from sign in");
+                if (newUser){
+                  navigate("/profile");
+                } else {
+                  navigate("/dashboard");
+                }
               }}
               style={{ fontFamily: "Poppins", textDecoration: "none" }}
             >
@@ -109,7 +119,14 @@ function Navbar() {
             </Button>
           )}
           {loginStatus && (
-            <Button variant="text" onClick={signOutOfApp}>
+            <Button
+              variant="text"
+              onClick={async () => {
+                await signOutOfApp();
+                console.log("returned from sign out");
+                navigate("/");
+              }}
+            >
               log out
             </Button>
           )}
