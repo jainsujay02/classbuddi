@@ -15,7 +15,7 @@ const ProfilePictureContainer = styled(Avatar) ({
 
 
 
-const SaveContactButton = styled(Button) ({
+const EditProfileButton = styled(Button) ({
     marginTop: '110px',
     
     variant:"contained",
@@ -72,7 +72,7 @@ const TextStyle ={
 }
 
 
-const NameBlock = () => {
+const NameBlockProfile = () => {
     return (
         <Grid container spacing={2}>
             <Grid item xs={3}>
@@ -95,7 +95,7 @@ const NameBlock = () => {
                 </Box>
             </Grid>
             <Grid item xs={3}>
-                <SaveContactButton><p> Save Contact </p></SaveContactButton>
+                <EditProfileButton><p> Edit Profile </p></EditProfileButton>
             </Grid>
         </Grid>
 
@@ -104,4 +104,4 @@ const NameBlock = () => {
     )
 }
 
-export default NameBlock;
+export default NameBlockProfile;

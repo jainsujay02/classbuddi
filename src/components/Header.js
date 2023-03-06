@@ -1,8 +1,22 @@
-import React from "react";
-import { AppBar, Toolbar, CssBaseline, makeStyles } from "@material-ui/core";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import {
+  AppBar,
+  Toolbar,
+  CssBaseline,
+  makeStyles,
+  Button,
+} from "@material-ui/core";
+import { Link, useNavigate } from "react-router-dom";
 import Logo from "../images/ClassBuddi-logo.svg";
 import Avatar from "../images/Avatar.svg";
+import {
+  signInWithGoogle,
+  signOutOfApp,
+  auth,
+  newUser,
+} from "./utils/firebase";
+import { onAuthStateChanged } from "firebase/auth";
+import { useAuth } from "./hooks/useAuth";
 
 const useStyles = makeStyles((theme) => ({
   navlinks: {
@@ -34,10 +48,24 @@ const useStyles = makeStyles((theme) => ({
     padding: "1.5rem",
   },
 }));
-// The value of loginStatus depends on whether the user is authenticated or not
-const loginStatus = true;
 
 function Navbar() {
+  const [loginStatus, setLoginStatus] = useState(false);
+  const navigate = useNavigate();
+  const { login, logout } = useAuth();
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      console.log("Header user", user);
+      if (user) {
+        setLoginStatus(true);
+        login(user);
+      } else {
+        setLoginStatus(false);
+        logout();
+      }
+    });
+  }, []);
+
   const classes = useStyles();
   return (
     <AppBar position="static" style={{ background: "#EEEEEE" }}>
@@ -58,11 +86,42 @@ function Navbar() {
             </Link>
           )}
           <Link to="/about" className={classes.link}>
-            about
+            about us
           </Link>
-          <Link to="/join" className={classes.link}>
-            join
-          </Link>
+          {!loginStatus && (
+            <Link to="/join" className={classes.link}>
+              join
+            </Link>
+          )}
+          {!loginStatus && (
+            <Button
+              variant="text"
+              onClick={async () => {
+                await signInWithGoogle();
+                console.log("returned from sign in");
+                if (newUser){
+                  navigate("/profile");
+                } else {
+                  navigate("/dashboard");
+                }
+              }}
+              style={{ fontFamily: "Poppins", textDecoration: "none" }}
+            >
+              log in
+            </Button>
+          )}
+          {loginStatus && (
+            <Button
+              variant="text"
+              onClick={async () => {
+                await signOutOfApp();
+                console.log("returned from sign out");
+                navigate("/");
+              }}
+            >
+              log out
+            </Button>
+          )}
         </div>
         {loginStatus && (
           <Link to="/">
