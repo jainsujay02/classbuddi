@@ -70,7 +70,7 @@ const ButtonStyle = {
   marginBottom: '0px',
 };
 
-const Landing_Image = () => {
+const LandingImage = () => {
     return (
         <Landing>
         <div style={{float:'left'}}>
@@ -87,4 +87,4 @@ const Landing_Image = () => {
     );
   }
   
-export default Landing_Image;
+export default LandingImage;
