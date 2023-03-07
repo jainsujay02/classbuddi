@@ -1,17 +1,51 @@
 // import logo from "./logo.svg";
 import "./App.css";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+// import React, { useState, useEffect } from "react";
+import { Routes, Route } from "react-router-dom";
 import Home from "./components/Home";
-import Footer from "./components/Footer"
+import Footer from "./components/Footer";
+import Navbar from "./components/Header.js";
+import ErrorComponent from "./components/ErrorComponent";
+import ProfileForm from "./components/profileform";
+import { ProtectedRoute } from "./components/ProtectedRoute";
+import { AuthProvider } from "./components/hooks/useAuth";
 
 function App() {
   return (
-    <BrowserRouter>
+    <AuthProvider>
+      <Navbar />
       <Routes>
         <Route path="/" element={<Home />}></Route>
+        <Route path="/about" element={<ErrorComponent />}></Route>
+        <Route path="/join" element={<ErrorComponent />}></Route>
+        <Route
+          path="/dashboard"
+          element={
+            <ProtectedRoute>
+              <ErrorComponent />
+            </ProtectedRoute>
+          }
+        ></Route>
+        <Route
+          path="/search"
+          element={
+            <ProtectedRoute>
+              <ErrorComponent />
+            </ProtectedRoute>
+          }
+        ></Route>
+        <Route
+          path="/profile"
+          element={
+            <ProtectedRoute>
+              <ProfileForm />
+            </ProtectedRoute>
+          }
+        ></Route>
+        <Route path="*" element={<ErrorComponent />} />
       </Routes>
       <Footer></Footer>
-    </BrowserRouter>
+    </AuthProvider>
   );
 }
 
