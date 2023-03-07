@@ -1,88 +1,75 @@
 import styled from 'styled-components'
 import landing_graphic from '../images/graphic-landing.png'
+import Grid from '@mui/material/Grid';
+import Button from '@mui/material/Button';
 
 const Landing = styled.div`
-background-color: #EEEEEE;
-height: 100vh;
-width: 100vw;
-
-p {
-  font-family: 'Poppins', sans-serif;
-  margin-left: 187px;
-  margin-right: 766px;
-}
+    background-color: #EEEEEE;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100vw;
 `
 
 const TitleStyle = {
-  fontSize: '72px',
+  marginTop: '-5px',
+  width: '100%',
+  height: '128px',
+  marginBottom: '0px',
+  
+  fontFamily: 'Poppins',
   fontStyle: 'normal',
-  fontWeight: '600',
+  fontWeight: 600,
+  fontSize: '290%',
+  lineHeight: '100px',
+  
   display: 'flex',
   alignItems: 'center',
   letterSpacing: '-0.25px',
-  lineHeight: '100px',
-  color: '#333333',
-  width: '559px',
-  height: '128px',
-  marginTop: '280px',
-  marginBottom: '0px',
+  
+  color: "#333333",
 };
 
 const BlurbStyle = {
-  width: '559px',
-  marginTop: '0px',
+  width: '90%',
   height: '72px',
-  fontSize: '24px',
+  fontSize: '90%',
   color: '#5F6C7B',
   lineHeight: '36px',
   fontStyle: 'normal',
-  marginBottom: '0px',
+  fontFamily: 'Poppins',
   textAlign: 'left',
+  marginTop: '-8px',
 };
 
 const ImgStyle = {
-  width: '500px',
-  height: '500px',
-  left: '818px',
-  top: '222px',
-  position: 'absolute',
-};
-
-const ButtonStyle = {
-  boxSizing: 'border-box',
-  display: 'flex',
-  flexDirection: 'column',
-  justifyContent: 'center',
-  alignItems: 'center',
-  padding: '16px 20px',
-  gap: '6px',
-  width: '233px',
-  height: '56px',
-  left: '185px',
-  marginTop: '19px',
-  border: '1.5px solid #2B59C3',
-  borderRadius: '16px',
-  fontWeight: '600',
-  fontSize: '16px',
-  lineHeight: '24px',
-  letterSpacing: '0.2px',
-  color: '#2B59C3',
-  marginBottom: '0px',
+  width: '100%',
+  height: '110%',
+  marginTop: '-80px'
 };
 
 const LandingImage = () => {
     return (
         <Landing>
-        <div style={{float:'left'}}>
-          <p style={TitleStyle}>ClassBuddi</p>
-          <p style={BlurbStyle}>
-                Reach out to fellow classmates. Build a support system. Find a classbuddi.
-                <button style={ButtonStyle} type="button">Join Us</button>
-          </p>
-        </div>
-        <div>
-          <img style={ImgStyle} src={landing_graphic} alt="Graphic Landing"></img>
-        </div>
+          <Grid container spacing={2}>
+            <Grid item xs={1}></Grid>
+            <Grid item xs={5}>
+              <p style={TitleStyle}>ClassBuddi</p>
+              <p style={BlurbStyle}>Reach out to fellow classmates. Build a 
+               support system. Find a classbuddi.
+                <Button variant="outlined" 
+                style={{textTransform: 'none'}}
+                sx={{marginTop: 3, gap: 6, padding: '16px 20px', borderRadius: 4, border: '1.5px solid #2B59C3', color: '#2B59C3', width: '43%', height: 56, 
+                fontSize: '62%', lineHeight: 24, letterSpacing: 0.2, fontFamily: 'Poppins', fontStyle: 'normal', fontWeight: 600, alignItems: 'left', display: 'flex'}}>
+                  Join Us</Button>
+              </p>
+            </Grid>
+            <Grid item xs={5}>
+              <img style={ImgStyle} src={landing_graphic} alt="Graphic Landing"></img>
+            </Grid>
+            <Grid item xs={1}></Grid>
+          </Grid>
         </Landing>
     );
   }
