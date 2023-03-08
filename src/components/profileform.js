@@ -119,10 +119,10 @@ const Form = () => {
     <Container>
         <Profiletitle></Profiletitle>
         <form onSubmit={handleSubmit}>
-        <Grid container   justifyContent="space-around">        
-        <Grid item xs={6} direction="column" align = "center" >
+        <Grid container justifyContent = {'space-around'}  columnSpacing = "150">  
+        <Grid item xs={6} direction="column" align={"right"}>
           <br></br>
-          <TextField fullWidth
+          <TextField fullWidth required
             id="name-input"
             name="name"
             label="Name"
@@ -130,39 +130,43 @@ const Form = () => {
             value={formValues.name}
             onChange={handleInputChange}
             style = {{width: 300}}
-          />
+            sx= {{backgroundColor: 'white'}}
+            />
           <br></br>
           <br></br>
-            <FormControl>
-            <InputLabel>Year</InputLabel>
+            <FormControl required>
+            <InputLabel
+            >Year</InputLabel>
             <Select
               label="year"
               name="year"
               style = {{width: 300}}
+              sx= {{backgroundColor: 'white'}}
               value={formValues.year}
               onChange={handleInputChange}
             >
               <MenuItem key="1st year" value="1st year">
-                1st Year
+                1st year
               </MenuItem>
               <MenuItem key="2nd year" value="2nd year">
-                2nd Year
+                2nd year
               </MenuItem>
               <MenuItem key="3rd year " value="2rd year">
-                3rd Year
+                3rd year
               </MenuItem>
               <MenuItem key="4th year " value="2th year">
-                4th Year
+                4th year
               </MenuItem>
               <MenuItem key="5th year " value="5th year">
-                5th Year
+                5th year
               </MenuItem>
             </Select>
             </FormControl>
             <br></br>
           <br></br>
-            <TextField
+            <TextField required
             style = {{width: 300}}
+            sx= {{backgroundColor: 'white'}}
             id="major-input"
             name="major"
             label="Major"
@@ -172,10 +176,11 @@ const Form = () => {
           />
            <br></br>
           <br></br>
-          <FormControl>
+          <FormControl required>
           <InputLabel>Pronouns</InputLabel>
             <Select
               style = {{width: 300}}
+              sx= {{backgroundColor: 'white'}}
               name="pronouns"
               label = "pronouns"
               value={formValues.pronouns}
@@ -202,13 +207,14 @@ const Form = () => {
         </Grid>
         <Grid item xs={6} direction="column"  align = "left">
         <p> Add a profile picture</p>
-        <Button variant="outlined" component="label" size = "large" style = {{width: 300}} color = "primary" onClick={() => setButtonText("Uploading")}>
+        <Button variant="outlined" component="label" size = "large" style = {{width: 300}}   sx= {{backgroundColor: 'white'}}  onClick={() => setButtonText("Uploading")}>
           {buttonText}
        <input hidden accept="image/*" multiple type="file" onChange={() => setButtonText("Uploaded")}/>
         </Button >
         <br></br>
         <p> How should people contact you?</p>
         <TextField
+        sx= {{backgroundColor: 'white'}}
         value={formValues.instagram}
         onChange={handleInputChange}
         name="instagram"
@@ -228,6 +234,7 @@ const Form = () => {
       <br></br>
       <TextField
       value={formValues.discord}
+      sx= {{backgroundColor: 'white'}}
       onChange={handleInputChange}
       name="discord"
       type="text"
@@ -247,6 +254,7 @@ const Form = () => {
 
       <TextField
         value={formValues.reddit}
+        sx= {{backgroundColor: 'white'}}
         onChange={handleInputChange}
         name="reddit"
         type="text"
@@ -263,13 +271,15 @@ const Form = () => {
       />
 
       </Grid>
-      <Grid item direction="column"  align = "center"  xs={10} > 
+      <Grid item direction="column"  align = "center"  xs={7} > 
+      <br></br>
         <p>Select your courses</p>
         <Autocomplete
           multiple
+          sx= {{backgroundColor: 'white'}}
           id="courses-input"
           name="courses"
-          label="courses"
+          label=" Courses"
           type="text"
         
           onChange={(event, value) => {
@@ -289,19 +299,19 @@ const Form = () => {
         getOptionLabel={(option) => option.label}
         renderInput={(params) => (
           <TextField
-            {...params}
-            variant="standard"
+          sx= {{backgroundColor: 'white'}}
+            {...params} required
             label="courses"
-            placeholder="Courses"
+            placeholder="courses"
           />
         )}
 
       />
       <br></br>
-      <br></br>
-<p> Select a few hobbies or interests (max. 3)</p>
+<p> Select a few hobbies or interests</p>
 <Autocomplete
           multiple
+          sx= {{backgroundColor: 'white'}}
           id="interests-input"
           name="interests"
           label="interests"
@@ -324,30 +334,31 @@ const Form = () => {
         getOptionLabel={(option) => option.label}
         renderInput={(params) => (
           <TextField
-            {...params}
-            variant="standard"
+            {...params} required
             label="interests"
             placeholder="interests"
           />
         )}
       />
       <br></br>
-      <br></br>
 
       <p> Help similar buddi’s find you</p>
-        <TextField
+        <TextField fullWidth
+           sx= {{backgroundColor: 'white'}}
           id="intro-input"
           name="intro"
           label="intro"
           type="text"
           multiline
-          maxRows={4}
-          variant="standard"
+          maxRows={6}
+
           value={formValues.intro}
           onChange={handleInputChange}
         />
 
-      
+<br></br>
+<p></p>
+
         </Grid>
         <Grid item xs={10}> 
         <Button variant="contained" color="primary" type="submit">
