@@ -1,3 +1,4 @@
+
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import {
@@ -8,6 +9,7 @@ import {
   signOut,
   getAdditionalUserInfo,
 } from "firebase/auth";
+import {getFirestore, collection, setDoc, doc} from "firebase/firestore";
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -98,3 +100,17 @@ export const authListener = () => {
     }
   });
 };
+
+
+//send profile info to firestore
+const db = getFirestore(app);
+
+const dbRef = collection(db, "ProfileFormData");
+
+let uid;
+onAuthStateChanged(auth, (user) => { uid = user.uid; });
+
+export const updateUser = (formValues) => {
+
+  return setDoc(doc(dbRef, uid), {formValues});
+}

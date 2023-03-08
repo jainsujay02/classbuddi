@@ -18,6 +18,8 @@ import TagIcon from '@mui/icons-material/Tag';
 import styled from 'styled-components'
 import {Autocomplete} from '@mui/material';
 
+//firebase imports
+import { updateUser, firebase} from "./utils/firebase";
 
 const compsciclasses = [
   {label: 'CS 1– Computer Science Seminar'},
@@ -103,6 +105,7 @@ const Form = () => {
       ...formValues,
       [name]: value,
     });
+
   };
   const handleSliderChange = (name) => (e, value) => {
     setFormValues({
@@ -113,7 +116,9 @@ const Form = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     console.log(formValues);
-    // console.log(courseText);
+
+    //update database
+    updateUser(formValues);
   };
   return (
     <Container>
@@ -148,10 +153,10 @@ const Form = () => {
               <MenuItem key="2nd year" value="2nd year">
                 2nd Year
               </MenuItem>
-              <MenuItem key="3rd year " value="2rd year">
+              <MenuItem key="3rd year " value="3rd year">
                 3rd Year
               </MenuItem>
-              <MenuItem key="4th year " value="2th year">
+              <MenuItem key="4th year " value="4th year">
                 4th Year
               </MenuItem>
               <MenuItem key="5th year " value="5th year">
