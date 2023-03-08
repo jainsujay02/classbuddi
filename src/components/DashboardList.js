@@ -1,7 +1,7 @@
 import DashboardCard from "./DashboardCard";
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
-
+import Link from '@mui/material/Link';
 
  const ClassHeaderStyle = {
    fontWeight: '600',
@@ -34,13 +34,25 @@ function DashboardList(){
         }}> 
         <Grid container rowSpacing={3}>
           <Grid item>
-            <DashboardCard/>
+            <Link href="'/'" 
+              underline="none"
+              > 
+              <DashboardCard/>
+            </Link>
           </Grid>
           <Grid item>
-            <DashboardCard/>
+            <Link href="/" 
+              underline="none"
+              > 
+              <DashboardCard/>
+            </Link>
           </Grid>
           <Grid item>
-            <DashboardCard/>
+            <Link href="/" 
+              underline="none"
+              > 
+              <DashboardCard/>
+            </Link>
           </Grid>
         </Grid>
       </Box>
