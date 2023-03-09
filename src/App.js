@@ -6,7 +6,10 @@ import Home from "./components/Home";
 import Footer from "./components/Footer";
 import Navbar from "./components/Header.js";
 import ErrorComponent from "./components/ErrorComponent";
+import  Dashboard from "./components/Dashboard.js";
+import SearchLanding from "./components/SearchLanding.js"
 import ProfileForm from "./components/profileform";
+import About from "./components/About"
 import { ProtectedRoute } from "./components/ProtectedRoute";
 import { AuthProvider } from "./components/hooks/useAuth";
 
@@ -16,13 +19,13 @@ function App() {
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />}></Route>
-        <Route path="/about" element={<ErrorComponent />}></Route>
+        <Route path="/about" element={<About />}></Route>
         <Route path="/join" element={<ErrorComponent />}></Route>
         <Route
           path="/dashboard"
           element={
             <ProtectedRoute>
-              <ErrorComponent />
+              <Dashboard />
             </ProtectedRoute>
           }
         ></Route>
@@ -30,7 +33,7 @@ function App() {
           path="/search"
           element={
             <ProtectedRoute>
-              <ErrorComponent />
+              <SearchLanding />
             </ProtectedRoute>
           }
         ></Route>
