@@ -96,6 +96,11 @@ function Navbar() {
           {!loginStatus && (
             <Button
               variant="text"
+              sx={{
+                "&.MuiButtonBase-root:hover": {
+                    boxShadow: '0px 0px 10px #00000066'}
+              }}
+              style={{textTransform: 'none', marginLeft: '12px', fontFamily: 'Poppins', fontStyle: 'normal', fontSize: "17.5px", color: "#333333"}}
               onClick={async () => {
                 await signInWithGoogle();
                 console.log("returned from sign in");
@@ -105,7 +110,6 @@ function Navbar() {
                   navigate("/dashboard");
                 }
               }}
-              style={{ fontFamily: "Poppins", textDecoration: "none" }}
             >
               log in
             </Button>
@@ -113,6 +117,7 @@ function Navbar() {
           {loginStatus && (
             <Button
               variant="text"
+              style={{textTransform: 'none', marginLeft: '12px', fontFamily: 'Poppins', fontStyle: 'normal', fontSize: "17.5px", color: "#333333"}}
               onClick={async () => {
                 await signOutOfApp();
                 console.log("returned from sign out");
