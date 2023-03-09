@@ -17,7 +17,7 @@ const Container = styled.div`
 const titlecontainer = () => {
   return (
       <Container>
-        <h1>tell us about yourself</h1>
+        <h1 style={{marginTop: '-50px'}}>Tell us about yourself</h1>
     </Container>
   )
 }
