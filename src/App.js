@@ -12,6 +12,7 @@ import ProfileForm from "./components/profileform";
 import About from "./components/About"
 import { ProtectedRoute } from "./components/ProtectedRoute";
 import { AuthProvider } from "./components/hooks/useAuth";
+import CourseForm from "./components/CoursePage";
 
 function App() {
   return (
@@ -34,6 +35,14 @@ function App() {
           element={
             <ProtectedRoute>
               <SearchLanding />
+            </ProtectedRoute>
+          }
+        ></Route>
+        <Route
+          path="/coursepage"
+          element={
+            <ProtectedRoute>
+              <CourseForm/>
             </ProtectedRoute>
           }
         ></Route>
