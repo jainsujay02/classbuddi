@@ -17,12 +17,13 @@ import RedditIcon from '@mui/icons-material/Reddit';
 import TagIcon from '@mui/icons-material/Tag';
 import styled from 'styled-components'
 import {Autocomplete} from '@mui/material';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 //firebase imports
 import { updateUser, firebase} from "./utils/firebase";
 
 const compsciclasses = [
-  {label: 'CS 1– Computer Science Seminar'},
+  {label: 'CS 1 – Computer Science Seminar'},
   {label: 'CS 30 – Principles & Practices of Computing'},
   {label: 'CS 31 – Intro to Com Sci I.'},
   {label: 'CS 32 – Intro to Com Sci II.'},
@@ -53,21 +54,49 @@ const compsciclasses = [
   {label: 'CS M182 – Systems Biomodeling and Simulation Basics'},
   {label: 'CS 183 – Introduction to Cryptography'},
   {label: 'CS M184 – Intro to Computational and Systems Biology'},
-  {label: 'CS CM186 – Computational & Systems Biology: Modeling and Simulation/strong>'},
-  {label: 'CS 188 – Special topics in Computer Science  '},
+  {label: 'CS CM186 – Computational & Systems Biology: Modeling and Simulation'},
+  {label: 'CS 188 – Special topics in Computer Science'},
  ]
 
  const interests = [
-  {label: 'Watching Movies'},
-  {label: 'Watching TV Shows'},
-  {label: 'Playing Badminton'},
-  {label: 'Hiking'},
-  {label: 'Running'},
-  {label: 'Coffee Shop Exploring'},
-  {label: 'Mindfulness'},
- ]
+  { label: 'Art and Art History' },
+  { label: 'Board Games' },
+  { label: 'Blogging' },
+  { label: 'Cooking and Baking' },
+  { label: 'Dancing' },
+  { label: 'DIY and Crafts' },
+  { label: 'Fashion and Beauty' },
+  { label: 'Gardening' },
+  { label: 'Hiking' },
+  { label: 'Horseback Riding' },
+  { label: 'Journaling' },
+  { label: 'Music and Music Production' },
+  { label: 'Photography' },
+  { label: 'Playing Badminton' },
+  { label: 'Reading' },
+  { label: 'Running' },
+  { label: 'Singing' },
+  { label: 'Soccer' },
+  { label: 'Swimming' },
+  { label: 'Tabletop Roleplaying Games' },
+  { label: 'Traveling and Exploring New Places' },
+  { label: 'Volleyball' },
+  { label: 'Volunteering' },
+  { label: 'Watching Live Sports' },
+  { label: 'Watching Movies' },
+  { label: 'Watching Stand-up Comedy' },
+  { label: 'Watching TV Shows' },
+  { label: 'Writing (e.g. poetry, short stories, screenplays, etc.)' }
+  ];
 
-
+ const theme = createTheme({
+  palette: {
+    buttonColor: {
+      main: '#A1C4FD',
+      contrastText: '#616161',
+    },
+  },
+});
 
 const Container = styled.div`
 	background-color: #EEEEEE;  
@@ -212,7 +241,7 @@ const Form = () => {
         </Grid>
         <Grid item xs={6} direction="column"  align = "left">
         <p> Add a profile picture</p>
-        <Button variant="outlined" component="label" size = "large" style = {{width: 300}}   sx= {{backgroundColor: 'white'}}  onClick={() => setButtonText("Uploading")}>
+        <Button variant="outlined" component="label" size = "large" style = {{width: 300}}  sx= {{backgroundColor: 'white', borderRadius: '10px', border: '1.5px solid #A1C4FD', color: "#A1C4FD"}}  onClick={() => setButtonText("Uploading")}>
           {buttonText}
        <input hidden accept="image/*" multiple type="file" onChange={() => setButtonText("Uploaded")}/>
         </Button >
@@ -276,7 +305,7 @@ const Form = () => {
       />
 
       </Grid>
-      <Grid item direction="column"  align = "center"  xs={7} > 
+      <Grid item direction="column"  align = "center"  xs={6.8} > 
       <br></br>
         <p>Select your courses</p>
         <Autocomplete
@@ -302,10 +331,11 @@ const Form = () => {
   
         options={compsciclasses}
         getOptionLabel={(option) => option.label}
+        InputLabelProps={ { required: true }}
         renderInput={(params) => (
           <TextField
           sx= {{backgroundColor: 'white'}}
-            {...params} required
+            {...params} 
             label="courses"
             placeholder="courses"
           />
@@ -337,9 +367,10 @@ const Form = () => {
   
         options={interests}
         getOptionLabel={(option) => option.label}
+        InputLabelProps={ { required: true }}
         renderInput={(params) => (
           <TextField
-            {...params} required
+            {...params} 
             label="interests"
             placeholder="interests"
           />
@@ -366,9 +397,14 @@ const Form = () => {
 
         </Grid>
         <Grid item xs={10}> 
-        <Button variant="contained" color="primary" type="submit">
-          Submit
-        </Button>
+          <ThemeProvider theme={theme}>
+            <Button variant="contained" type="submit"
+                    color = 'buttonColor'
+                    style={{textTransform: 'none'}}
+                    sx={{boxShadow: 0, marginTop: 3, marginBottom: 5, marginLeft: '475px', gap: 6, padding: '16px 20px', borderRadius: 10, border: '1.5px solid #A1C4FD', width: '235px', height: 56, 
+                    fontSize: '14px', lineHeight: 20, letterSpacing: 0.4, fontFamily: 'Poppins', fontStyle: 'normal', fontWeight: 500, justifyContent: 'center', display: 'flex'}}>
+                      Submit </Button>
+          </ThemeProvider>
         </Grid>
       </Grid>
     </form>
