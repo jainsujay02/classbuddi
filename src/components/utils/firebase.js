@@ -1,4 +1,3 @@
-
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import {
@@ -9,7 +8,13 @@ import {
   signOut,
   getAdditionalUserInfo,
 } from "firebase/auth";
-import {getFirestore, collection, setDoc, doc} from "firebase/firestore";
+import {
+  getFirestore,
+  collection,
+  setDoc,
+  doc,
+  getDoc,
+} from "firebase/firestore";
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -46,10 +51,10 @@ export const signInWithGoogle = () =>
       // const token = credential.accessToken;
       // The signed-in user info.
       userDetails = result.user;
-      
+
       // IdP data available using getAdditionalUserInfo(result)
       newUser = getAdditionalUserInfo(result).isNewUser;
-      
+
       console.log(newUser);
       console.log(userDetails);
     })
@@ -101,16 +106,29 @@ export const authListener = () => {
   });
 };
 
-
 //send profile info to firestore
 const db = getFirestore(app);
 
 const dbRef = collection(db, "ProfileFormData");
 
 let uid;
-onAuthStateChanged(auth, (user) => { uid = user.uid; });
+onAuthStateChanged(auth, (user) => {
+  uid = user.uid;
+});
 
 export const updateUser = (formValues) => {
+  return setDoc(doc(dbRef, uid), { formValues });
+};
 
-  return setDoc(doc(dbRef, uid), {formValues});
-}
+// get the user info
+
+export const getUserData = async () => {
+  const docRef = doc(db, "ProfileFormData", uid);
+  const docSnap = await getDoc(docRef);
+  if (docSnap.exists()) {
+    return docSnap.data();
+  } else {
+    // doc.data() will be undefined in this case
+    console.log("No such document!");
+  }
+};
