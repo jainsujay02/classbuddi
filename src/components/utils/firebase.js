@@ -10,7 +10,6 @@ import {
 } from "firebase/auth";
 import {
   getFirestore,
-  collection,
   setDoc,
   doc,
   getDoc,
@@ -106,27 +105,68 @@ export const authListener = () => {
   });
 };
 
-//send profile info to firestore
-const db = getFirestore(app);
+// Create a custom Student class to be stored in the firebase db
+class Student {
+  constructor (name, major, pronouns, year, courses, interests, instagram, discord, reddit, intro) {
+      this.name = name;
+      this.major = major;
+      this.pronouns = pronouns;
+      this.year = year;
+      this.courses = courses;
+      this.interests = interests;
+      this.instagram = instagram;
+      this.discord = discord;
+      this.reddit = reddit;
+      this.intro = intro;
+  }
+  toString() {
+      return this.name + ', ' + this.major + ', ' + this.pronouns + ', ' + this.year + ', ' + this.courses + ', ' + this.interests + ', ' + this.instagram + ', ' + this.discord + ', ' + this.reddit + ', ' + this.intro;
+  }
+}
 
-const dbRef = collection(db, "ProfileFormData");
+// Firestore data converter
+const studentConverter = {
+  toFirestore: (student) => {
+      return {
+          name: student.name,
+          major: student.major,
+          pronouns: student.pronouns,
+          year: student.year,
+          courses: student.courses,
+          interests: student.interests,
+          instagram: student.instagram,
+          discord: student.discord,
+          reddit: student.reddit,
+          intro: student.intro
+          };
+  },
+  fromFirestore: (snapshot, options) => {
+      const data = snapshot.data(options);
+      return new Student(data.name, data.major, data.pronouns, data.year, data.courses, data.interests, data.instagram, data.discord, data.reddit, data.intro);
+  }
+};
+
+const db = getFirestore(app);
 
 let uid;
 onAuthStateChanged(auth, (user) => {
   uid = user.uid;
 });
 
+//send profile info to firestore
 export const updateUser = (formValues) => {
-  return setDoc(doc(dbRef, uid), { formValues });
+  const ref = doc(db, "ProfileFormData", uid).withConverter(studentConverter);
+  return setDoc(ref, new Student(formValues.name, formValues.major, formValues.pronouns, formValues.year, formValues.courses, formValues.interests, formValues.instagram, formValues.discord, formValues.reddit, formValues.intro));
 };
 
 // get the user info
-
 export const getUserData = async () => {
-  const docRef = doc(db, "ProfileFormData", uid);
+  const docRef = doc(db, "ProfileFormData", uid).withConverter(studentConverter);
   const docSnap = await getDoc(docRef);
   if (docSnap.exists()) {
-    return docSnap.data();
+    const student = docSnap.data();
+    console.log("returning to dashboard")
+    return student;
   } else {
     // doc.data() will be undefined in this case
     console.log("No such document!");

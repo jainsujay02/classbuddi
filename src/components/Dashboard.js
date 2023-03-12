@@ -10,7 +10,7 @@ import DashboardList from "./DashboardList";
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 // firebase imports
 import { getUserData } from "./utils/firebase"
@@ -22,9 +22,18 @@ const Contain = {
 //there will be a grid to organize the various class lists next to each other
 //there will be a grid for each contact to organize the data displayed within them?
 function Dashboard() {
-  
+  // student holds the current user info returned from the backend
+  const [student, setStudent] = useState(null);
   useEffect(() => {
-    console.log("RES FROM DB", getUserData());
+    console.log("returned from form");
+    const promise = getUserData();
+    promise.then((value) => {
+      console.log(value);
+      setStudent(value);
+    })
+    promise.catch((err) => {
+      console.log(err);
+    })
   },[]);
 
   return(
