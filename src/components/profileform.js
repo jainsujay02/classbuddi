@@ -21,6 +21,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 //firebase imports
 import { updateUser, firebase} from "./utils/firebase";
+import { Link } from "react-router-dom";
 
 const compsciclasses = [
   {label: 'CS 1 – Computer Science Seminar'},
@@ -399,12 +400,14 @@ const Form = () => {
         </Grid>
         <Grid item xs={10}>
           <ThemeProvider theme={theme}>
+            <Link to="/dashboard">
             <Button variant="contained" type="submit"
                     color = 'buttonColor'
                     style={{textTransform: 'none'}}
                     sx={{boxShadow: 0, marginTop: 3, marginBottom: 5, marginLeft: '475px', gap: 6, padding: '16px 20px', borderRadius: 10, border: '1.5px solid #A1C4FD', width: '235px', height: 56,
                     fontSize: '14px', lineHeight: 20, letterSpacing: 0.4, fontFamily: 'Poppins', fontStyle: 'normal', fontWeight: 500, justifyContent: 'center', display: 'flex'}}>
                       Submit </Button>
+                      </Link>
           </ThemeProvider>
         </Grid>
       </Grid>
