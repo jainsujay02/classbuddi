@@ -2,12 +2,8 @@ import DashboardCard from "./DashboardCard";
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Link from '@mui/material/Link';
+import ProfileOtherBackground from "./ProfileOtherBackground";
 
- const ClassHeaderStyle = {
-   fontWeight: '600',
-   marginBottom: '30px',
-   fontSize: '22px'
- }
 
 /* THIS COMPONENT'S FUNCTION
 * This component will inherit the DashboardCard components and will display
@@ -21,43 +17,52 @@ import Link from '@mui/material/Link';
 * how to dynamically pull list of students and class 
 */
 
-function DashboardList(){
+
+function createList(contactArray){
+  //need to know people?
+   //array of contacts
+  var numStudents = contactArray.length;
+  var contactList = [];
+  var i;
+  for (i = 0; i < numStudents; i++ ){
+    contactList[i] = (
+    <Grid item>
+      <Link href="'/'" 
+        underline="none"
+        > 
+          <DashboardCard
+            name={contactArray[i].name}
+            image={contactArray[i].image}
+          />
+      </Link>
+  </Grid>
+  )
+  }
+  return contactList;
+}
+
+function DashboardList(props){
   //will replace this first div with a function to handle 
   //grabbing the header
+  var contactArray = props.classStudentList;
+  // var numStudents = contactArray.length;
+  // var contactList = [];
+  // var i;
+
   return(
     <div>
-      <div style={ClassHeaderStyle}>COM SCI 131</div>
       <Box sx={{ 
         width: 348,
-        height: 368,
+        height: 'auto',
         display: 'flex',
         }}> 
         <Grid container rowSpacing={3}>
-          <Grid item>
-            <Link href="'/'" 
-              underline="none"
-              > 
-              <DashboardCard/>
-            </Link>
-          </Grid>
-          <Grid item>
-            <Link href="/" 
-              underline="none"
-              > 
-              <DashboardCard/>
-            </Link>
-          </Grid>
-          <Grid item>
-            <Link href="/" 
-              underline="none"
-              > 
-              <DashboardCard/>
-            </Link>
-          </Grid>
+          {createList(contactArray)}
         </Grid>
       </Box>
     </div>
   );
 }
+
 
 export default DashboardList;
