@@ -80,7 +80,7 @@ const CDStyle = {
 
 
 
-const ClassesStacked = () => {
+function ClassesStacked ({value}) {
     return (
         <Stack   
         direction="column"
@@ -92,49 +92,18 @@ const ClassesStacked = () => {
 
                 <Grid container spacing={1}>
                     <Grid item xs={1}>
-                        <p style={CNStyle}>COM SCI 33</p>
+                        <p style={CNStyle}>{value.name}</p>
                     </Grid>
                     <Grid item xs={1}>
                         <NextArrow> <EastIcon/> </NextArrow> 
                     </Grid>
                     <Grid item xs={13}>
-                        <p style={CDStyle}>Introduction to Computer Organization</p>
+                        <p style={CDStyle}>{value.title}</p>
                     </Grid>
                 </Grid>
 
             </ClassBox>
-
-            <ClassBox>
-
-                <Grid container spacing={1}>
-                    <Grid item xs={1}>
-                        <p style={CNStyle}>COM SCI 35L</p>
-                    </Grid>
-                    <Grid item xs={1}>
-                        <NextArrow> <EastIcon/> </NextArrow> 
-                    </Grid>
-                    <Grid item xs={13}>
-                        <p style={CDStyle}>Software Construction Labratory</p>
-                    </Grid>
-                </Grid>
-
-            </ClassBox>
-
-            <ClassBox>
-
-                <Grid container spacing={1}>
-                    <Grid item xs={1}>
-                        <p style={CNStyle}>COM SCI 32</p>
-                    </Grid>
-                    <Grid item xs={1}>
-                        <NextArrow> <EastIcon/> </NextArrow> 
-                    </Grid>
-                    <Grid item xs={13}>
-                        <p style={CDStyle}>Introduction to Computer Science II</p>
-                    </Grid>
-                </Grid>
-
-            </ClassBox>
+            <br></br>
         </Stack>
     )
 
