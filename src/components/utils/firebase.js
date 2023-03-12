@@ -9,7 +9,15 @@ import {
   signOut,
   getAdditionalUserInfo,
 } from "firebase/auth";
-import {getFirestore, collection, setDoc, doc} from "firebase/firestore";
+import {
+  getFirestore, 
+  collection, 
+  setDoc,
+  query, 
+  where, 
+  getDocs,
+  doc, 
+} from "firebase/firestore";
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -114,3 +122,80 @@ export const updateUser = (formValues) => {
 
   return setDoc(doc(dbRef, uid), {formValues});
 }
+
+
+// handle filtering for course page
+export const filterUsers = async (filterYear, filterInterests, filterCourse) => { 
+  let iList = [];
+  let cList = [];
+  let yList = [];
+  let retList = [];
+
+  if (filterCourse.length !== 0) {
+    const c = query(dbRef, where("formValues.courses", "array-contains", filterCourse) );
+
+    const querySnapshot = await getDocs(c);
+
+    querySnapshot.forEach((doc) => {
+      // doc.data() is never undefined for query doc snapshots
+      //console.log(doc.id, " => ", doc.data());
+      cList.push(doc.id)
+    });
+  }
+  if (filterInterests.length !== 0) {
+    const i = query(dbRef, where('formValues.interests', "array-contains-any" , filterInterests) );
+
+    const querySnapshot = await getDocs(i);
+
+    querySnapshot.forEach((doc) => {
+      // doc.data() is never undefined for query doc snapshots
+      //console.log(doc.id, " => ", doc.data());
+      iList.push(doc.id)
+    });
+  }
+  if (filterYear.length !== 0) {
+    const y = query(dbRef, where('formValues.year', 'in' , filterYear) );
+
+    const querySnapshot = await getDocs(y);
+
+    querySnapshot.forEach((doc) => {
+      // doc.data() is never undefined for query doc snapshots
+      //console.log(doc.id, " => ", doc.data());
+      yList.push(doc.id)
+    });
+  }
+
+  //filtering based of year AND interests if both non-empty
+
+  if (filterYear.length !== 0 && filterInterests.length !== 0) {
+
+    if (yList.length <= iList.length){
+      for (let i = 0; i < yList.length; i++){
+        let item = yList[i]
+        if (iList.includes(item) && cList.includes(item)){
+          retList.push(item);
+        }
+      }
+    }
+    else if (filterYear.length > filterInterests.length){
+        for (let i = 0; i < iList.length; i++){
+          let item = iList[i]
+          if (yList.includes(item) && cList.includes(item)){
+            retList.push(item);
+          }
+        }
+
+    }
+  }
+
+  // course AND filtering based of year or interests if either empty
+  if (filterYear.length === 0 && filterInterests.length !== 0) { retList.push(...iList);}
+  else if (filterYear.length !== 0 && filterInterests.length === 0) {retList.push(...yList);}
+
+
+  // Showing all users in course if filtering both empty (default)
+  if (filterYear.length === 0 && filterInterests.length === 0) {retList.push(...cList);}
+
+  console.log(retList);
+}
+

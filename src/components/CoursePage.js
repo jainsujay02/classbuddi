@@ -13,6 +13,8 @@ import { Dashboard } from "@material-ui/icons";
 import  DashboardList from "./DashboardList.js";
 import Stack from '@mui/material/Stack';
 
+//firebase imports
+import {filterUsers, firebase} from "./utils/firebase"
 
  const interests = [
   { label: 'Art and Art History' },
@@ -84,6 +86,11 @@ const CourseForm = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     console.log(checkValues);
+
+    //update database
+    const course = "CS 35L – Software Construction Lab";
+    filterUsers(checkValues.years , checkValues.interests, course)
+
   };
 
     const handleInputChange = (e) => {
