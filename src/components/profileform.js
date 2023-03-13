@@ -21,6 +21,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 //firebase imports
 import { updateUser, firebase} from "./utils/firebase";
+import { useNavigate } from "react-router-dom";
 
 const compsciclasses = [
   {label: 'CS 1 – Computer Science Seminar'},
@@ -108,7 +109,6 @@ const Container = styled.div`
       font-family: 'Poppins', sans-serif;
       font-size: 40px;
     }
-
   /* margin-bottom: 60px; */
 `
 const defaultValues = {
@@ -127,7 +127,8 @@ const defaultValues = {
 const Form = () => {
   const [formValues, setFormValues] = useState(defaultValues);
   const [buttonText, setButtonText] = useState("Upload");
-  const [profileImage, setProfileImage] = useState(null)
+  const [profileImage, setProfileImage] = useState(null);
+  const navigate = useNavigate();
   // const [courseText, setCourseText] = useState([compsciclasses[1]]);
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -144,17 +145,18 @@ const Form = () => {
     }
 
   };
-  const handleSubmit = (event) => {
-    event.preventDefault();
+  const handleSubmit = () => {
+    console.log("submitting");
     console.log(formValues);
     console.log(profileImage)
+    console.log("FORM:",formValues);
     //update database
     updateUser(formValues);
   };
   return (
     <Container>
         <Profiletitle></Profiletitle>
-        <form onSubmit={handleSubmit}>
+        <form>
         <Grid container justifyContent = {'space-around'}  columnSpacing = "150">
         <Grid item xs={6} direction="column" align={"right"}>
           <br></br>
@@ -400,8 +402,9 @@ const Form = () => {
         </Grid>
         <Grid item xs={10}>
           <ThemeProvider theme={theme}>
-            <Button variant="contained" type="submit"
+            <Button variant="contained" type="button"
                     color = 'buttonColor'
+                    onClick={() => {handleSubmit(); navigate("/dashboard");}}
                     style={{textTransform: 'none'}}
                     sx={{boxShadow: 0, marginTop: 3, marginBottom: 5, marginLeft: '475px', gap: 6, padding: '16px 20px', borderRadius: 10, border: '1.5px solid #A1C4FD', width: '235px', height: 56,
                     fontSize: '14px', lineHeight: 20, letterSpacing: 0.4, fontFamily: 'Poppins', fontStyle: 'normal', fontWeight: 500, justifyContent: 'center', display: 'flex'}}>
