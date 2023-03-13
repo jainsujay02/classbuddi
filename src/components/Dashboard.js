@@ -10,6 +10,11 @@ import DashboardList from "./DashboardList";
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 
+import { useEffect, useState } from "react";
+
+// firebase imports
+import { getUserData, getStudentsInClass } from "./utils/firebase"
+
 const Contain = {
   backgroundColor: '#EEEEEE',
   fontFamily: "'Poppins', sans-serif",
@@ -41,8 +46,45 @@ function roster() {
 
 
 
+  // student holds the current user info returned from the backend
+  const [student, setStudent] = useState(null);
+  // courseStudentMap holds the map of course -> student in that course
+  const [courseStudentMap, setCourseStudentMap] = useState(new Map());
+
+  useEffect(() => {
+    
+    console.log("returned from form");
+    const promise = getUserData();
+    promise.then((value) => {
+      console.log("here", value);
+      setStudent(value);
+      const studentCourses = value.courses;
+      studentCourses.forEach((course) => {
+        const coursePromise = getStudentsInClass(course);
+        coursePromise.then((cvalue) => {
+          console.log(cvalue);
+          let temp = [];
+          if (!courseStudentMap.has(course)) {
+            cvalue.forEach((s) => {
+              if (s.name !== value.name) {
+                temp.push(s);
+              }
+            })
+            courseStudentMap.set(course, temp);
+          }
+        });
+      });
+      setCourseStudentMap(courseStudentMap);
+    })
+    promise.catch((err) => {
+      console.log(err);
+    })
+  },[]);
+
+
 //there will be a grid to organize the various class lists next to each other
 //there will be a grid for each contact to organize the data displayed within them?
+
 function Dashboard() {
   return(
     <div style={Contain}>
