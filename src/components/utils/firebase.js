@@ -196,7 +196,12 @@ const db = getFirestore(app);
 
 let uid;
 onAuthStateChanged(auth, (user) => {
-  uid = user.uid;
+  if (user) {
+    uid = user.uid;
+  }
+  else {
+    console.log("Error USER LOGGED OUT");
+  }
 });
 
 //send profile info to firestore
