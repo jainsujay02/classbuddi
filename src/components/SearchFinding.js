@@ -1,4 +1,4 @@
-import ClassesStacked from "./ClassesStacked";
+import ClassesStackedSearch from "./ClassesStackedSearch";
 import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
 import styled from 'styled-components';
@@ -91,7 +91,7 @@ function checkNull({value}) {
     if (value !== null) {
         myArray[0] = (
             <div>
-                {ClassesStacked({value})}
+                {ClassesStackedSearch({value})}
                 <br></br>
                 <br></br>
                 <br></br>

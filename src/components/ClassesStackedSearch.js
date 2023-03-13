@@ -78,7 +78,9 @@ const CDStyle = {
     color: '#000000',
 }
 
-function ClassesStacked ({dumb1}, i) {
+
+
+function ClassesStacked ({value}) {
     return (
         <Stack   
         direction="column"
@@ -90,13 +92,13 @@ function ClassesStacked ({dumb1}, i) {
 
                 <Grid container spacing={1}>
                     <Grid item xs={1}>
-                        <p style={CNStyle}>{dumb1[i].name}</p>
+                        <p style={CNStyle}>{value.name}</p>
                     </Grid>
                     <Grid item xs={1}>
                         <NextArrow> <EastIcon/> </NextArrow> 
                     </Grid>
                     <Grid item xs={13}>
-                        <p style={CDStyle}>{dumb1[i].title}</p>
+                        <p style={CDStyle}>{value.title}</p>
                     </Grid>
                 </Grid>
 
@@ -104,5 +106,6 @@ function ClassesStacked ({dumb1}, i) {
             <br></br>
         </Stack>
     )
+
 }
 export default ClassesStacked;

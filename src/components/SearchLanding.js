@@ -86,6 +86,29 @@ const CSClasses = [
     {label: 'CS 188 - Special topics in Computer Science'},
    ]
 
+
+var classesDummy = function(name, title){
+    this.name = name; 
+    this.title = title
+}
+   
+function SearchBoxes(numOfBoxes) {
+    let dumb1 = []
+    for (let i = 0; i < numOfBoxes; i++) {
+        var ComSciClasses = new classesDummy('CS 31', 'Intro to Com Sci I')
+        dumb1.push(ComSciClasses)
+    }
+    var myArray = [];
+    for (let i = 0; i < numOfBoxes; i++) {
+        myArray[i] = (
+            <div>
+                {ClassesStacked({dumb1}, i)}
+            </div>
+        );
+    }
+    return myArray;
+}
+
 const SearchLanding = () => {
     return (
         <Bg>
@@ -111,7 +134,7 @@ const SearchLanding = () => {
                         label="Search for a course and find a classbuddi!" />}
                         />
                         <p style={Text2}> Your current courseload: </p>
-                        <ClassesStacked/>
+                        {SearchBoxes(4)}
                     </Stack>
             </Container>
         </Bg>
