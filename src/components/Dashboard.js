@@ -13,7 +13,7 @@ import Stack from '@mui/material/Stack';
 import { useEffect, useState } from "react";
 
 // firebase imports
-import { getUserData } from "./utils/firebase"
+import { getUserData, getStudentsInClass } from "./utils/firebase"
 
 const Contain = {
   backgroundColor: '#EEEEEE',
@@ -24,12 +24,33 @@ const Contain = {
 function Dashboard() {
   // student holds the current user info returned from the backend
   const [student, setStudent] = useState(null);
+  // courseStudentMap holds the map of course -> student in that course
+  const [courseStudentMap, setCourseStudentMap] = useState(new Map());
+
   useEffect(() => {
+    
     console.log("returned from form");
     const promise = getUserData();
     promise.then((value) => {
-      console.log(value);
+      console.log("here", value);
       setStudent(value);
+      const studentCourses = value.courses;
+      studentCourses.forEach((course) => {
+        const coursePromise = getStudentsInClass(course);
+        coursePromise.then((cvalue) => {
+          console.log(cvalue);
+          let temp = [];
+          if (!courseStudentMap.has(course)) {
+            cvalue.forEach((s) => {
+              if (s.name !== value.name) {
+                temp.push(s);
+              }
+            })
+            courseStudentMap.set(course, temp);
+          }
+        });
+      });
+      setCourseStudentMap(courseStudentMap);
     })
     promise.catch((err) => {
       console.log(err);
