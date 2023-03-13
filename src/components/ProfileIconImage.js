@@ -1,9 +1,12 @@
 import profIcon from '../images/prof-icon.svg';
 
-function ProfileIconImage(){
+function ProfileIconImage(props){
   return(
-  <div><img src={profIcon} alt="Avatar Icon"/></div>
+    <div><img src={props.image} alt="Avatar Icon"/></div>
   );
-}
+};
 
+ProfileIconImage.defaultProps = {
+    image: profIcon,
+ }
 export default ProfileIconImage;

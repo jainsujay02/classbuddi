@@ -19,9 +19,33 @@ const Contain = {
   backgroundColor: '#EEEEEE',
   fontFamily: "'Poppins', sans-serif",
 }
-//there will be a grid to organize the various class lists next to each other
-//there will be a grid for each contact to organize the data displayed within them?
-function Dashboard() {
+
+const ClassHeaderStyle = {
+  fontWeight: '600',
+  marginBottom: '30px',
+  fontSize: '22px'
+}
+
+let numStudents = 10;
+
+function roster() {
+  var students = [];
+  var i;
+  for (i = 0; i < numStudents; i++ ){
+    students[i]=({
+      name: 'joe b',
+      image: '',
+    });
+  }
+  const rost = {
+    courseName: 'comsci',
+    contactList:students,
+  }
+  return rost;
+}
+
+
+
   // student holds the current user info returned from the backend
   const [student, setStudent] = useState(null);
   // courseStudentMap holds the map of course -> student in that course
@@ -57,6 +81,11 @@ function Dashboard() {
     })
   },[]);
 
+
+//there will be a grid to organize the various class lists next to each other
+//there will be a grid for each contact to organize the data displayed within them?
+
+function Dashboard() {
   return(
     <div style={Contain}>
     <br></br>
@@ -72,8 +101,14 @@ function Dashboard() {
           direction="row"
           spacing={8}
         >
-          <DashboardList/>
-          <DashboardList/>
+          <Box>
+            <div style={ClassHeaderStyle}>{roster().courseName}</div>
+            <DashboardList classStudentList={roster().contactList}/>
+          </Box>
+          <Box>
+            <div style={ClassHeaderStyle}>{roster().courseName}</div>
+            <DashboardList classStudentList={roster().contactList}/>
+          </Box>
           <DashboardImage/>
         </Stack>
         <br></br>
