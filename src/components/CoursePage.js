@@ -82,6 +82,7 @@ const defaultValues = {
 const CourseForm = () => {
 
   const [checkValues, setcheckValues] = useState(defaultValues);
+  const [students, setStudents] = useState(null); 
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -89,7 +90,13 @@ const CourseForm = () => {
 
     //update database
     const course = "CS 35L – Software Construction Lab";
-    filterUsers(checkValues.years , checkValues.interests, course)
+    console.log(filterUsers(checkValues.years , checkValues.interests, course));
+
+    const promise = filterUsers(checkValues.years , checkValues.interests, course);
+    promise.then((value) => {
+      setStudents(value);
+    });
+
 
   };
 
@@ -101,7 +108,9 @@ const CourseForm = () => {
       });
   
     };
-
+    // we dont need this condition as it doesn't render on mounting as seen in useEffect
+    // if (!students) return (<p>Loading ...</p>);
+    // console.log("top level students", students);
     return (
     <Container>
         <h1> CS 33 - Introduction to Computer Organisation</h1>

@@ -10,13 +10,14 @@ import {
   getAdditionalUserInfo,
 } from "firebase/auth";
 import {
-  getFirestore, 
-  collection, 
+  getFirestore,
   setDoc,
-  query, 
-  where, 
+  doc,
+  getDoc,
+  collection,
+  query,
+  where,
   getDocs,
-  doc, 
 } from "firebase/firestore";
 
 // TODO: Add SDKs for Firebase products that you want to use
@@ -54,10 +55,10 @@ export const signInWithGoogle = () =>
       // const token = credential.accessToken;
       // The signed-in user info.
       userDetails = result.user;
-      
+
       // IdP data available using getAdditionalUserInfo(result)
       newUser = getAdditionalUserInfo(result).isNewUser;
-      
+
       console.log(newUser);
       console.log(userDetails);
     })
@@ -109,22 +110,178 @@ export const authListener = () => {
   });
 };
 
-
-//send profile info to firestore
-const db = getFirestore(app);
-
-const dbRef = collection(db, "ProfileFormData");
-
-let uid;
-onAuthStateChanged(auth, (user) => { uid = user.uid; });
-
-export const updateUser = (formValues) => {
-
-  return setDoc(doc(dbRef, uid), {formValues});
+// Create a custom Student class to be stored in the firebase db
+class Student {
+  constructor(
+    name,
+    major,
+    pronouns,
+    year,
+    courses,
+    interests,
+    instagram,
+    discord,
+    reddit,
+    intro
+  ) {
+    this.name = name;
+    this.major = major;
+    this.pronouns = pronouns;
+    this.year = year;
+    this.courses = courses;
+    this.interests = interests;
+    this.instagram = instagram;
+    this.discord = discord;
+    this.reddit = reddit;
+    this.intro = intro;
+  }
+  toString() {
+    return (
+      this.name +
+      ", " +
+      this.major +
+      ", " +
+      this.pronouns +
+      ", " +
+      this.year +
+      ", " +
+      this.courses +
+      ", " +
+      this.interests +
+      ", " +
+      this.instagram +
+      ", " +
+      this.discord +
+      ", " +
+      this.reddit +
+      ", " +
+      this.intro
+    );
+  }
 }
 
+// Firestore data converter
+const studentConverter = {
+  toFirestore: (student) => {
+    return {
+      name: student.name,
+      major: student.major,
+      pronouns: student.pronouns,
+      year: student.year,
+      courses: student.courses,
+      interests: student.interests,
+      instagram: student.instagram,
+      discord: student.discord,
+      reddit: student.reddit,
+      intro: student.intro,
+    };
+  },
+  fromFirestore: (snapshot, options) => {
+    const data = snapshot.data(options);
+    return new Student(
+      data.name,
+      data.major,
+      data.pronouns,
+      data.year,
+      data.courses,
+      data.interests,
+      data.instagram,
+      data.discord,
+      data.reddit,
+      data.intro
+    );
+  },
+};
 
-// handle filtering for course page
+const db = getFirestore(app);
+
+let uid;
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    uid = user.uid;
+  }
+  else {
+    console.log("Error USER LOGGED OUT");
+  }
+});
+
+//send profile info to firestore
+export const updateUser = (formValues) => {
+  const ref = doc(db, "ProfileFormData", uid).withConverter(studentConverter);
+  return setDoc(
+    ref,
+    new Student(
+      formValues.name,
+      formValues.major,
+      formValues.pronouns,
+      formValues.year,
+      formValues.courses,
+      formValues.interests,
+      formValues.instagram,
+      formValues.discord,
+      formValues.reddit,
+      formValues.intro
+    )
+  );
+};
+
+// get the user info
+export const getUserData = async () => {
+  const docRef = doc(db, "ProfileFormData", uid).withConverter(
+    studentConverter
+  );
+  const docSnap = await getDoc(docRef);
+  if (docSnap.exists()) {
+    const student = docSnap.data();
+    console.log("returning to dashboard");
+    return student;
+  } else {
+    // doc.data() will be undefined in this case
+    console.log("No such document!");
+  }
+};
+
+// get list of other students in the student class
+export const getStudentsInClass = async (studentCourse) => {
+  const q = query(
+    collection(db, "ProfileFormData"),
+    where("courses", "array-contains", studentCourse)
+  ).withConverter(studentConverter);
+  const querySnapshot = await getDocs(q);
+  console.log("query complete");
+  // console.log(querySnapshot);
+  var arr = []
+  querySnapshot.forEach((doc) => {
+    // doc.data() is never undefined for query doc snapshots
+    // console.log(doc.data());
+    const data = doc.data();
+    arr.push(data);
+    // console.log(data);
+  });
+  // return (new Student(data.name, data.major, data.pronouns, data.year, data.courses, data.interests, data.instagram, data.discord, data.reddit, data.intro));
+  return arr;
+};
+
+// get user from name
+export const getUserDataFromName = async (id) => {
+  const q = query(
+    collection(db, "ProfileFormData"),
+    where("name", "==", id)
+  ).withConverter(studentConverter);
+  const querySnapshot = await getDocs(q);
+  console.log("query complete");
+  var arr = []
+  querySnapshot.forEach((doc) => {
+    // doc.data() is never undefined for query doc snapshots
+    // console.log(doc.data());
+    const data = doc.data();
+    arr.push(data);
+    console.log("Other Student", data);
+  });
+  return arr;
+};
+
+const dbRef = collection(db, "ProfileFormData");
 export const filterUsers = async (filterYear, filterInterests, filterCourse) => { 
   let iList = [];
   let cList = [];
@@ -132,7 +289,7 @@ export const filterUsers = async (filterYear, filterInterests, filterCourse) => 
   let retList = [];
 
   if (filterCourse.length !== 0) {
-    const c = query(dbRef, where("formValues.courses", "array-contains", filterCourse) );
+    const c = query(dbRef, where("courses", "array-contains", filterCourse) );
 
     const querySnapshot = await getDocs(c);
 
@@ -143,7 +300,7 @@ export const filterUsers = async (filterYear, filterInterests, filterCourse) => 
     });
   }
   if (filterInterests.length !== 0) {
-    const i = query(dbRef, where('formValues.interests', "array-contains-any" , filterInterests) );
+    const i = query(dbRef, where('interests', "array-contains-any" , filterInterests) );
 
     const querySnapshot = await getDocs(i);
 
@@ -154,7 +311,7 @@ export const filterUsers = async (filterYear, filterInterests, filterCourse) => 
     });
   }
   if (filterYear.length !== 0) {
-    const y = query(dbRef, where('formValues.year', 'in' , filterYear) );
+    const y = query(dbRef, where('year', 'in' , filterYear) );
 
     const querySnapshot = await getDocs(y);
 
@@ -197,5 +354,21 @@ export const filterUsers = async (filterYear, filterInterests, filterCourse) => 
   if (filterYear.length === 0 && filterInterests.length === 0) {retList.push(...cList);}
 
   console.log(retList);
-}
 
+  retList.forEach((item) => {
+
+
+  });
+
+  const a = []
+  for (let item of retList) {
+
+    const docRef = doc(dbRef, item).withConverter(studentConverter);
+    const docSnap = await getDoc(docRef);
+    a.push(docSnap.data());
+    
+  };
+
+  //console.log(a);
+  return a;
+}
