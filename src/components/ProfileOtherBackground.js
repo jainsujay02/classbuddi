@@ -6,6 +6,11 @@ import InterestsList from './InterestsList';
 import SocialList from './SocialsList';
 import NameBlock from './NameBlock';
 
+import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import { onAuthStateChanged } from 'firebase/auth';
+import { getUserDataFromName, auth } from './utils/firebase';
+
 const Bg = styled.div`
     background-color: #EEEEEE;
     display: flex;
@@ -44,9 +49,34 @@ const HeaderStyle = {
     
     color: '#000000',
 }
-
-
+ 
 const ProfileOtherBackground = () => {
+    let { id } = useParams();
+    console.log(id);
+
+    // state variable to hold other student's profile object
+    const [otherStudent, setOtherStudent] = useState(null);
+
+    useEffect(() => {
+        onAuthStateChanged(auth, (user) => {
+          if (user) {
+            console.log("running use effect from profile other");
+            console.log(id);
+            const otherStudentPromise = getUserDataFromName(id);
+            otherStudentPromise.then((value) => {
+                // @Sujay - the request assumes that every student has a distinct name
+                // The value here is an array of students with the name id, but there would\
+                // always be only one element because of our assumption.
+                setOtherStudent(value[0]);
+            });
+          }
+          else {
+            console.log("Dashboard Err!!")
+          }
+        });
+      }, []);
+    console.log("Checking nullity", otherStudent);
+    if (!otherStudent?.name) return (<p>Loading...</p>);
     return(
         <Bg>
             <ClassBox>

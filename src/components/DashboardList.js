@@ -40,7 +40,7 @@ function DashboardList(props){
         }}> 
         <Grid container rowSpacing={3}>
           <Grid item>
-            <Link href="'/'" 
+            <Link href={`/other/${n1}`}
               underline="none"
               > 
               {/* @Sujay - you would need to customize this for your account if you don't write robust code to display classmate */}
@@ -48,9 +48,9 @@ function DashboardList(props){
             </Link>
           </Grid>
           <Grid item>
-            <Link href="/" 
+            <Link href={`/other/${n2}`}
               underline="none"
-              > 
+              >
               <DashboardCard name = {n2} />
             </Link>
           </Grid>

@@ -260,3 +260,22 @@ export const getStudentsInClass = async (studentCourse) => {
   // return (new Student(data.name, data.major, data.pronouns, data.year, data.courses, data.interests, data.instagram, data.discord, data.reddit, data.intro));
   return arr;
 };
+
+// get user from name
+export const getUserDataFromName = async (id) => {
+  const q = query(
+    collection(db, "ProfileFormData"),
+    where("name", "==", id)
+  ).withConverter(studentConverter);
+  const querySnapshot = await getDocs(q);
+  console.log("query complete");
+  var arr = []
+  querySnapshot.forEach((doc) => {
+    // doc.data() is never undefined for query doc snapshots
+    // console.log(doc.data());
+    const data = doc.data();
+    arr.push(data);
+    console.log("Other Student", data);
+  });
+  return arr;
+};
