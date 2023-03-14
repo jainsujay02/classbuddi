@@ -23,7 +23,7 @@ const CardStyle = styled(Box)({
   }
 })
 
-function DashboardCard(){
+function DashboardCard(props){
   return(
      <CardStyle>
       <Box
@@ -37,7 +37,7 @@ function DashboardCard(){
             <ProfileIconImage/>
           </Grid>
           <Grid item xs={6.5}>
-            <div style={nameStyle}>Joe Bruin</div>
+            <div style={nameStyle}>{props.name}</div>
           </Grid>
           <Grid item xs={2}>
             <ArrowIcon/>

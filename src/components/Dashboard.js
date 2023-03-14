@@ -27,10 +27,19 @@ function Dashboard() {
   const [student, setStudent] = useState(null);
   // courseStudentMap holds the map of course -> student in that course
   const [courseStudentMap, setCourseStudentMap] = useState(new Map());
+  const [courseList1, setCourseList1] = useState(null);
+  const [courseList2, setCourseList2] = useState(null);
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
+        console.log("entering Promise all");
+        // Implementing Promise all
+        // const userPromise = getUserData();
+        // Promise.all([userPromise]).then((values) => {
+        //   console.log("dashboard user:", values[0]);
+        //   setStudent(values[0]);
+        // });
         console.log("Dashboard onAuth!!");
         console.log("returned from form");
         const promise = getUserData();
@@ -50,6 +59,7 @@ function Dashboard() {
                   }
                 });
                 courseStudentMap.set(course, temp);
+                setCourseList1(temp)
               }
             });
           });
@@ -64,13 +74,17 @@ function Dashboard() {
       }
     });
   }, []);
-
+  // console.log("top level map", courseStudentMap);
+  // console.log("top level course list 1", courseList1);
+  // console.log("top level course list 2", courseList2);
+  // console.log("top level student", student);
   return (
     <div style={Contain}>
       <br></br>
       <br></br>
       <br></br>
       <DashboardHeader props = {student} />
+      <p></p>
       <Box
         sx={{
           marginTop: "40px",
@@ -78,8 +92,8 @@ function Dashboard() {
         }}
       >
         <Stack direction="row" spacing={8}>
-          <DashboardList />
-          <DashboardList />
+          <DashboardList student = {student} index = {0} courseMap = {courseStudentMap} />
+          <DashboardList student = {student} index = {1} courseMap = {courseStudentMap} />
           <DashboardImage />
         </Stack>
         <br></br>
