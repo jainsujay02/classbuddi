@@ -129,7 +129,7 @@ function Navbar() {
           )}
         </div>
         {loginStatus && (
-          <Link to="/">
+          <Link to="/profile">
             <img src={Avatar} alt="avatar" className={classes.avatar}></img>
           </Link>
         )}
