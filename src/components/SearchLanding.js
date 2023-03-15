@@ -4,6 +4,9 @@ import TextField from '@mui/material/TextField';
 import styled from 'styled-components';
 import { Container } from '@mui/material';
 import Autocomplete from '@mui/material/Autocomplete';
+import {useState} from "react";
+import { Button } from '@mui/material';
+
 
 const Bg = styled.div`
     background-color: #EEEEEE;
@@ -18,17 +21,17 @@ const Text1 = {
     marginBottom: '0px',
     width: '716px',
     height: '120px',
-    
+
     fontFamily: 'Poppins',
     fontStyle: 'normal',
     fontWeight: 600,
     fontSize: '40px',
     lineHeight: '72px',
-    
+
     display: 'flex',
     alignItems: 'center',
     letterSpacing: '-0.25px',
-    
+
     color: "#333333",
 }
 
@@ -36,17 +39,17 @@ const Text2 = {
     marginTop: '38px',
     width: '328px',
     height: '36px',
-    
+
     fontFamily: 'Poppins',
     fontStyle: 'normal',
     fontWeight: 400,
     fontSize: '22px',
     lineHeight: '72px',
-    
+
     display: 'flex',
     alignItems: 'center',
     letterSpacing: '-0.25px',
-    
+
     color: "#333333",
 }
 
@@ -86,13 +89,25 @@ const CSClasses = [
     {label: 'CS 188 - Special topics in Computer Science'},
    ]
 
-const SearchLanding = () => {
+const SearchCourseForm = () => {
+    const [searchCourse, setSearchCourse] = useState("");
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        console.log(searchCourse);
+
+    };
+
+
     return (
         <Bg>
             <Container fixed sx={{marginBottom: '50px', display: 'flex', marginLeft: '20%'}}>
+            <form onSubmit={handleSubmit}>
                     <Stack>
                         <p style={Text1}> Find a class </p>
                         <Autocomplete
+                        onChange = {(event, value) => {
+                            setSearchCourse(value)}}
                         disablePortal
                         id="combo-box-demo"
                         options={CSClasses}
@@ -101,20 +116,25 @@ const SearchLanding = () => {
                           }}
                         sx={{
                             '& .MuiAutocomplete-input': {
-                            fontFamily: 'Poppins', fontStyle: 'normal'}, 
+                            fontFamily: 'Poppins', fontStyle: 'normal'},
                             width: 812
                         }}
-                        renderInput={(params) => 
-                        <TextField 
-                        {...params} 
+                        renderInput={(params) =>
+                        <TextField
+                        {...params}
                         sx= {{backgroundColor: 'white'}}
                         label="Search for a course and find a classbuddi!" />}
                         />
+                        <br></br>
+        <Button type="submit" size = "large" style = {{height: 60, width: 200,}}  sx= {{backgroundColor: 'white'} } >
+          Search
+        </Button>
                         <p style={Text2}> Your current courseload: </p>
                         <ClassesStacked/>
                     </Stack>
+                    </form>
             </Container>
         </Bg>
     )
 }
-export default SearchLanding;
+export default SearchCourseForm;
