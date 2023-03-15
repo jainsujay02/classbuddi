@@ -13,6 +13,7 @@ import About from "./components/About"
 import { ProtectedRoute } from "./components/ProtectedRoute";
 import { AuthProvider } from "./components/hooks/useAuth";
 import CourseForm from "./components/CoursePage";
+import ProfileBackground from "./components/ProfileBackground";
 
 function App() {
   return (
@@ -47,10 +48,18 @@ function App() {
           }
         ></Route>
         <Route
-          path="/profile"
+          path="/profileform"
           element={
             <ProtectedRoute>
               <ProfileForm />
+            </ProtectedRoute>
+          }
+        ></Route>
+                <Route
+          path="/profile"
+          element={
+            <ProtectedRoute>
+              <ProfileBackground />
             </ProtectedRoute>
           }
         ></Route>

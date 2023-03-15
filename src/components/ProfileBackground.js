@@ -5,6 +5,10 @@ import InterestsList from './InterestsList';
 import SocialList from './SocialsList';
 import NameBlockProfile from './NameBlockProfile';
 
+import { useEffect, useState } from 'react';
+import { onAuthStateChanged } from 'firebase/auth';
+import { getUserData, auth } from './utils/firebase';
+
 const Bg = styled.div`
     background-color: #EEEEEE;
     display: flex;
@@ -46,16 +50,39 @@ const HeaderStyle = {
 
 
 const ProfileBackground = () => {
+
+
+    // state variable to hold student's profile object
+    const [student, setStudent] = useState(null);
+
+    useEffect(() => {
+        onAuthStateChanged(auth, (user) => {
+          if (user) {
+            console.log("running use effect from profile");
+            const studentPromise = getUserData();
+            studentPromise.then((value) => {
+                console.log(value);
+                setStudent(value);
+            });
+          }
+          else {
+            console.log("Dashboard Err!!")
+          }
+        });
+      }, []);
+    console.log("Checking nullity", student);
+    if (!student?.name) return (<p>Loading...</p>);
+
     return(
         <Bg>
             <ClassBox>
-                <NameBlockProfile/>
+                <NameBlockProfile  props = {student}/>
                 <p style={HeaderStyle}> Courses </p>
-                <ClassesStacked />
+                <ClassesStacked props = {student}/>
                 <p style={HeaderStyle}> Interests </p>
-                <InterestsList/>
+                <InterestsList props = {student}/>
                 <p style={HeaderStyle}> Contact Information </p>
-                <SocialList/>
+                <SocialList props = {student}/>
             </ClassBox>
 
         </Bg>

@@ -72,7 +72,11 @@ const TextStyle ={
 }
 
 
-const NameBlockProfile = () => {
+const NameBlockProfile = (props) => {
+
+    let nsize = props.props.courses.length
+
+
     return (
         <Grid container spacing={2}>
             <Grid item xs={3}>
@@ -80,18 +84,15 @@ const NameBlockProfile = () => {
             </Grid>
             <Grid item xs={3}>
                     <Box>
-                        <p style={NameStyle}>Joe Bruin</p>
+                        <p style={NameStyle}>{props.props.name}</p>
                     </Box>
                     <Box>
-                        <p style={TextStyle}>Lorem ipsum dolor sit amet, 
-                        consectetur adipiscing elit. 
-                        Integer pretium sollicitudin neque id vulputate. 
-                        Sed eget dolor a ligula auctor scelerisque </p>
+                        <p style={TextStyle}> {props.props.intro} </p>
                     </Box>
             </Grid>
-            <Grid item xs={3}> 
+            <Grid item xs={3}>
                 <Box sx={{marginTop: '115px'}}>
-                    <p style={TextStyle}> pronouns </p>
+                    <p style={TextStyle}> {props.props.pronouns} </p>
                 </Box>
             </Grid>
             <Grid item xs={3}>
@@ -99,8 +100,8 @@ const NameBlockProfile = () => {
             </Grid>
         </Grid>
 
-        
-    
+
+
     )
 }
 
