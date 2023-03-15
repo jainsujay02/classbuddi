@@ -1,5 +1,5 @@
 import Profiletitle from "./profiletitle.js"
-import {useState} from "react"; 
+import {useState} from "react";
 import { TextField } from '@mui/material';
 import { Grid } from '@mui/material';
 import {InputAdornment} from '@mui/material';
@@ -21,6 +21,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 //firebase imports
 import { updateUser, firebase} from "./utils/firebase";
+import { useNavigate } from "react-router-dom";
 
 const compsciclasses = [
   {label: 'CS 1 – Computer Science Seminar'},
@@ -99,7 +100,7 @@ const compsciclasses = [
 });
 
 const Container = styled.div`
-	background-color: #EEEEEE;  
+	background-color: #EEEEEE;
 	height: auto;
 	color: #333333;
 	padding: 30px 0 10px 0;
@@ -108,7 +109,6 @@ const Container = styled.div`
       font-family: 'Poppins', sans-serif;
       font-size: 40px;
     }
-	
   /* margin-bottom: 60px; */
 `
 const defaultValues = {
@@ -117,16 +117,18 @@ const defaultValues = {
   year: "",
   pronouns:"",
   instagram: "",
-  reddit: "", 
+  reddit: "",
   discord:"",
-  courses: [], 
-  interests: [], 
+  courses: [],
+  interests: [],
   intro:"",
 
 };
 const Form = () => {
   const [formValues, setFormValues] = useState(defaultValues);
-  const [buttonText, setButtonText] = useState("Upload"); 
+  const [buttonText, setButtonText] = useState("Upload");
+  const [profileImage, setProfileImage] = useState(null);
+  const navigate = useNavigate();
   // const [courseText, setCourseText] = useState([compsciclasses[1]]);
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -136,24 +138,26 @@ const Form = () => {
     });
 
   };
-  const handleSliderChange = (name) => (e, value) => {
-    setFormValues({
-      ...formValues,
-      [name]: value,
-    });
-  };
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    console.log(formValues);
+  const handleImageChange = e => {
+    if(e.target.files[0]) {
+      setProfileImage(e.target.files[0])
+      setButtonText("Uploaded")
+    }
 
+  };
+  const handleSubmit = () => {
+    console.log("submitting");
+    console.log(formValues);
+    console.log(profileImage)
+    console.log("FORM:",formValues);
     //update database
     updateUser(formValues);
   };
   return (
     <Container>
         <Profiletitle></Profiletitle>
-        <form onSubmit={handleSubmit}>
-        <Grid container justifyContent = {'space-around'}  columnSpacing = "150">  
+        <form>
+        <Grid container justifyContent = {'space-around'}  columnSpacing = "150">
         <Grid item xs={6} direction="column" align={"right"}>
           <br></br>
           <TextField fullWidth required
@@ -237,13 +241,13 @@ const Form = () => {
               </MenuItem>
             </Select>
             </FormControl>
-          
+
         </Grid>
         <Grid item xs={6} direction="column"  align = "left">
         <p> Add a profile picture</p>
-        <Button variant="outlined" component="label" size = "large" style = {{width: 300}}  sx= {{backgroundColor: 'white', borderRadius: '10px', border: '1.5px solid #A1C4FD', color: "#A1C4FD"}}  onClick={() => setButtonText("Uploading")}>
+        <Button variant="outlined" component="label" size = "large" style = {{width: 300}}  sx= {{backgroundColor: 'white', borderRadius: '10px', border: '1.5px solid #A1C4FD', color: "#A1C4FD"}}  onClick={() => setButtonText("Upload")}>
           {buttonText}
-       <input hidden accept="image/*" multiple type="file" onChange={() => setButtonText("Uploaded")}/>
+       <input hidden accept="image/*" multiple type="file" onChange={handleImageChange}/>
         </Button >
         <br></br>
         <p> How should people contact you?</p>
@@ -305,7 +309,7 @@ const Form = () => {
       />
 
       </Grid>
-      <Grid item direction="column"  align = "center"  xs={6.8} > 
+      <Grid item direction="column"  align = "center"  xs={6.8} >
       <br></br>
         <p>Select your courses</p>
         <Autocomplete
@@ -315,7 +319,7 @@ const Form = () => {
           name="courses"
           label=" Courses"
           type="text"
-        
+
           onChange={(event, value) => {
             let coursesList = [];
             value.forEach((course) => {
@@ -328,14 +332,14 @@ const Form = () => {
          });
      }
      } //** on every input change hitting my api**
-  
+
         options={compsciclasses}
         getOptionLabel={(option) => option.label}
         InputLabelProps={ { required: true }}
         renderInput={(params) => (
           <TextField
           sx= {{backgroundColor: 'white'}}
-            {...params} 
+            {...params}
             label="courses"
             placeholder="courses"
           />
@@ -351,7 +355,7 @@ const Form = () => {
           name="interests"
           label="interests"
           type="text"
-        
+
           onChange={(event, value) => {
             let interestList = [];
             value.forEach((interests) => {
@@ -364,13 +368,13 @@ const Form = () => {
          });
      }
      } //** on every input change hitting my api**
-  
+
         options={interests}
         getOptionLabel={(option) => option.label}
         InputLabelProps={ { required: true }}
         renderInput={(params) => (
           <TextField
-            {...params} 
+            {...params}
             label="interests"
             placeholder="interests"
           />
@@ -396,12 +400,13 @@ const Form = () => {
 <p></p>
 
         </Grid>
-        <Grid item xs={10}> 
+        <Grid item xs={10}>
           <ThemeProvider theme={theme}>
-            <Button variant="contained" type="submit"
+            <Button variant="contained" type="button"
                     color = 'buttonColor'
+                    onClick={() => {handleSubmit(); navigate("/dashboard");}}
                     style={{textTransform: 'none'}}
-                    sx={{boxShadow: 0, marginTop: 3, marginBottom: 5, marginLeft: '475px', gap: 6, padding: '16px 20px', borderRadius: 10, border: '1.5px solid #A1C4FD', width: '235px', height: 56, 
+                    sx={{boxShadow: 0, marginTop: 3, marginBottom: 5, marginLeft: '475px', gap: 6, padding: '16px 20px', borderRadius: 10, border: '1.5px solid #A1C4FD', width: '235px', height: 56,
                     fontSize: '14px', lineHeight: 20, letterSpacing: 0.4, fontFamily: 'Poppins', fontStyle: 'normal', fontWeight: 500, justifyContent: 'center', display: 'flex'}}>
                       Submit </Button>
           </ThemeProvider>
@@ -409,7 +414,7 @@ const Form = () => {
       </Grid>
     </form>
     </Container>
-    
+
   );
 };
 export default Form;

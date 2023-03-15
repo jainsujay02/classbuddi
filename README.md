@@ -1,70 +1,69 @@
-# Getting Started with Create React App
+# ClassBuddi
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+<img src="src/images/ClassBuddi.png" alt="ClassBuddi logo" style="height:250 px; width:250px;"/>
 
-## Available Scripts
+## Overview
 
-In the project directory, you can run:
+ClassBuddi is a web application designed to help UCLA students easily connect with like-minded
+classmates in their CS courses.
 
-### `npm start`
+Due to the large class sizes at UCLA, students often struggle to find peers who share similar
+interests and personalities, making it challenging to form meaningful friendships and support
+systems in the midst of demanding coursework. Classbuddi address this problem by allowing user
+to create a profile page with interests and a brief introduction. More importantly, users can
+filter and search for potential friends in their classes and connect with them through email
+or social media.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Features
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### 1. Make your profile
 
-### `npm test`
+Sign up using any gmail account and create your profile: enter your name, CS classes, year,
+pronouns, interests, and social media handles.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### 2. Filter through a list of classmates to find peers with similiar interests.
 
-### `npm run build`
+Navigate to the classes you're interested in and you'll find a list of students that
+you can filter based on year and interests.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### 3. Check peers profiles and get their preferred contact information
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Once you're narrowed down the list of potential friends, look at their profiles
+and get their prefered contact method.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Running the App
 
-### `npm run eject`
+Please run all the following commands on your terminal.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### Clone the Repository
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+`git clone https://github.com/jainsujay02/classbuddi`
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+Or, just download a zip directly through GitHub from the link above and extract it locally.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+### Enter the directory
 
-## Learn More
+Once you're in the folder where you cloned the ClassBuddi repository.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+`cd classbuddi`
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### Install the dependencies
 
-### Code Splitting
+`npm install --legacy-peer-deps`
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+We are adding the --legacy-peer-deps option because we are using two different versions of MUI
+leading to dependency conflicts. This option leads complete build resolution of these conflicts.
+We are using two different versions because certain componenets that we are using are not yet
+available in MUI V5.
 
-### Analyzing the Bundle Size
+### Run the app
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+`npm start`
 
-### Making a Progressive Web App
+This command should automatically redirect you to the broswer and open the application. If it
+does not do so, please open your default browser, and type http://localhost:3000/.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+### Explore and find friends!
 
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Create an account, navigate to your CS classes and filter the list of students to find
+potenial friends.

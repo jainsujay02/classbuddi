@@ -10,6 +10,7 @@ import  Dashboard from "./components/Dashboard.js";
 import SearchLanding from "./components/SearchLanding.js"
 import ProfileForm from "./components/profileform";
 import About from "./components/About"
+import ProfileOtherBackground from "./components/ProfileOtherBackground"
 import { ProtectedRoute } from "./components/ProtectedRoute";
 import { AuthProvider } from "./components/hooks/useAuth";
 import CourseForm from "./components/CoursePage";
@@ -55,11 +56,19 @@ function App() {
             </ProtectedRoute>
           }
         ></Route>
-                <Route
+        <Route
           path="/profile"
           element={
             <ProtectedRoute>
               <ProfileBackground />
+            </ProtectedRoute>
+          }
+        ></Route>
+        <Route
+          path="/other/:id"
+          element={
+            <ProtectedRoute>
+              <ProfileOtherBackground />
             </ProtectedRoute>
           }
         ></Route>
