@@ -72,6 +72,14 @@ function App() {
             </ProtectedRoute>
           }
         ></Route>
+        <Route
+          path="/search/:id"
+          element={
+            <ProtectedRoute>
+              <CourseForm />
+            </ProtectedRoute>
+          }
+        ></Route>
         <Route path="*" element={<ErrorComponent />} />
       </Routes>
       <Footer></Footer>
