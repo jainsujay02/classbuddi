@@ -51,6 +51,7 @@ const useStyles = makeStyles((theme) => ({
 
 function Navbar() {
   const [loginStatus, setLoginStatus] = useState(false);
+  const [u, setU] = useState(null);
   const navigate = useNavigate();
   const { login, logout } = useAuth();
   useEffect(() => {
@@ -58,6 +59,7 @@ function Navbar() {
       console.log("Header user", user);
       if (user) {
         setLoginStatus(true);
+        setU(user);
         login(user);
       } else {
         setLoginStatus(false);
@@ -67,6 +69,8 @@ function Navbar() {
   }, []);
 
   const classes = useStyles();
+  if (!u) return (<p>Loading...</p>);
+  console.log("printing in header" , u.photoURL);
   return (
     <AppBar position="static" style={{ background: "#EEEEEE" }}>
       <CssBaseline />
@@ -130,7 +134,7 @@ function Navbar() {
         </div>
         {loginStatus && (
           <Link to="/">
-            <img src={Avatar} alt="avatar" className={classes.avatar}></img>
+            <img src={u.photoURL} referrerPolicy="no-referrer" alt="avatar" className={classes.avatar}></img>
           </Link>
         )}
       </Toolbar>
