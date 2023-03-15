@@ -17,6 +17,12 @@ import ProfileOtherBackground from "./ProfileOtherBackground";
 * how to dynamically pull list of students and class
 */
 
+const ClassHeaderStyle = {
+  fontWeight: '600',
+  marginBottom: '30px',
+  fontSize: '22px'
+}
+
 function DashboardList(props){
   //will replace this first div with a function to handle
   //grabbing the header
