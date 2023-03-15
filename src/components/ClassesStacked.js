@@ -5,6 +5,8 @@ import IconButton from '@mui/material/IconButton';
 import EastIcon from '@mui/icons-material/East';
 import Grid from '@mui/material/Grid';
 
+import { Link } from 'react-router-dom';
+
 
 const ClassBox = styled(Box)({
     width: 812,
@@ -84,7 +86,7 @@ const ClassesStacked = (props) => {
 
     function Work (){
     let n1size = props.props.courses.length
-    console.log("what the fuck is worng here?", n1size)
+    console.log("what is worng here?", n1size)
     let arr = []
     for (let i = 0; i < n1size && i < 4; i++ ) {
       arr.push(props.props.courses[i]);
@@ -94,7 +96,9 @@ const ClassesStacked = (props) => {
 
     <Grid container spacing={0}>
                     <Grid item xs={1}>
-                        <NextArrow> <EastIcon/> </NextArrow>
+                        <Link to={`/search/${n}`}>
+                            <NextArrow> <EastIcon/> </NextArrow>
+                        </Link>
                     </Grid>
                     <Grid item xs={13}>
                         <p style={CDStyle}>{n}</p>

@@ -9,7 +9,7 @@ import { Select } from "@mui/material";
 import styled from "styled-components";
 import { Autocomplete } from "@mui/material";
 import { Dashboard } from "@material-ui/icons";
-import DashboardList from "./DashboardList.js";
+import CourseStudentList from "./CourseStudentList.js";
 import Stack from "@mui/material/Stack";
 
 import { useParams } from "react-router-dom";
@@ -63,7 +63,7 @@ const years = [
 ];
 
 const Container = styled.div`
-background-color: #EEEEEE;  
+background-color: #EEEEEE;
 height: auto;
 color: #333333;
 padding: 30px 10px 40px 270px;
@@ -139,9 +139,11 @@ const CourseForm = () => {
   };
   if (!allStudentsInCourse) return <p>Loading ...</p>;
   // console.log("top level students", students);
+
+  if (!students)
   return (
     <Container>
-      <h1> {id}</h1>
+      <h1 align = "left"> {id}</h1>
       <br></br>
       <h4 align="left"> Filter your search</h4>
       <form onSubmit={handleSubmit}>
@@ -215,9 +217,90 @@ const CourseForm = () => {
         </Grid>
       </form>
 
-      <Stack direction="row" spacing={8} sx={{ margin: 4 }} align="center">
-        <DashboardList />
-        <DashboardList />
+      <Stack direction="row" spacing={8} sx={{ ml: 28, mt: 5,}} align="center">
+        <CourseStudentList props = {allStudentsInCourse} />
+      </Stack>
+    </Container>
+  );
+
+  return (
+    <Container>
+      <h1 align = "left"> {id}</h1>
+      <br></br>
+      <h4 align="left"> Filter your search</h4>
+      <form onSubmit={handleSubmit}>
+        <Grid container columnSpacing="75">
+          <Grid item xs={2} direction="column" align={"right"}>
+            <Autocomplete
+              multiple
+              sx={{ backgroundColor: "white" }}
+              id="matching-year"
+              name="matching-year"
+              label="matching-year"
+              type="text"
+              onChange={(event, value) => {
+                let yearList = [];
+                value.forEach((year) => {
+                  yearList.push(year.label);
+                });
+
+                setcheckValues({
+                  ...checkValues,
+                  years: yearList,
+                });
+              }} //** on every input change hitting my api**
+              options={years}
+              getOptionLabel={(option) => option.label}
+              renderInput={(params) => (
+                <TextField {...params} label="year" placeholder="year" />
+              )}
+            />
+          </Grid>
+          <Grid item xs={4} direction="column" align={"left"}>
+            <Autocomplete
+              multiple
+              sx={{ backgroundColor: "white" }}
+              id="matching-interests-input"
+              name="matching-interests"
+              label="matching-interests"
+              type="text"
+              onChange={(event, value) => {
+                let interestList = [];
+                value.forEach((interests) => {
+                  interestList.push(interests.label);
+                });
+
+                setcheckValues({
+                  ...checkValues,
+                  interests: interestList,
+                });
+              }} //** on every input change hitting my api**
+              options={interests}
+              getOptionLabel={(option) => option.label}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  label="matching interests"
+                  placeholder="matching interests"
+                />
+              )}
+            />
+          </Grid>
+          <Grid item xs={2}>
+            <Button
+              type="submit"
+              size="large"
+              style={{ height: 60, width: 200 }}
+              sx={{ backgroundColor: "white" }}
+            >
+              Filter
+            </Button>
+          </Grid>
+        </Grid>
+      </form>
+
+      <Stack direction="row" spacing={8} sx={{ ml: 28, mt: 5,}} align="center">
+        <CourseStudentList props = {students} />
       </Stack>
     </Container>
   );

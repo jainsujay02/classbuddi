@@ -100,7 +100,7 @@ const SearchCourseForm = () => {
   const [searchCourse, setSearchCourse] = useState("");
 
   // state variable to hold student's profile object
-  const [studentCourses, setStudentCourses] = useState(null);
+  const [student, setStudent] = useState(null);
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
@@ -109,19 +109,23 @@ const SearchCourseForm = () => {
         const studentPromise = getUserData();
         studentPromise.then((value) => {
           console.log(value);
-          setStudentCourses(value.courses);
+          setStudent(value);
         });
       } else {
         console.log("Dashboard Err!!");
       }
     });
   }, []);
-  console.log("Checking nullity", studentCourses);
-  if (!studentCourses) return <p>Loading...</p>;
+  console.log("Checking nullity", student);
+  // if (!studentCourses) return <p>Loading...</p>;
+  if (!student?.name) return (<p>Loading...</p>);
   const handleSubmit = (event) => {
     event.preventDefault();
     console.log(searchCourse);
   };
+
+  console.log("what are student courses", student);
+
 
   return (
     <Bg>
@@ -169,6 +173,7 @@ const SearchCourseForm = () => {
               </Button>
             </Link>
             <p style={Text2}> Your current courseload: </p>
+            <ClassesStacked props = {student} />
           </Stack>
         </form>
       </Container>

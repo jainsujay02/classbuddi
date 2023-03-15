@@ -4,7 +4,7 @@ import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
 import ProfilePicture from "../images/ProfilePicture.svg";
-
+import {Link} from "react-router-dom"
 
 const ProfilePictureContainer = styled(Avatar) ({
     marginTop: '90px',
@@ -17,7 +17,7 @@ const ProfilePictureContainer = styled(Avatar) ({
 
 const EditProfileButton = styled(Button) ({
     marginTop: '110px',
-    
+
     variant:"contained",
     justifyContent: 'center',
     alignItems: 'center',
@@ -26,14 +26,14 @@ const EditProfileButton = styled(Button) ({
     background: 'rgba(226, 188, 185, 0.5)',
     borderRadius: '20px',
     color: 'black',
-    
+
     fontFamily: 'Work Sans',
     fontStyle: 'normal',
     fontWeight: 500,
     fontSize: '12px',
     lineHeight: '16px',
 
-    
+
 
 })
 
@@ -57,7 +57,7 @@ const NameStyle = {
 
 }
 
-const TextStyle ={ 
+const TextStyle ={
 
     width: '599px',
     height: '75px',
@@ -96,7 +96,9 @@ const NameBlockProfile = (props) => {
                 </Box>
             </Grid>
             <Grid item xs={3}>
+                <Link to = "/profileform" style={{ textDecoration: 'none' }}>
                 <EditProfileButton><p> Edit Profile </p></EditProfileButton>
+                </Link>
             </Grid>
         </Grid>
 
