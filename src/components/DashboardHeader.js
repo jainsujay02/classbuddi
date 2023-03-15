@@ -18,11 +18,13 @@ const SubStyle = {
   marginLeft: '100px',
 }
 
-function DashboardHeader() {
+function DashboardHeader(props) {
+  if (!props.props?.name) return (<p>Loading...</p>);
+  console.log("this is student", props.props);
   return(
     <Container>
       <div>
-        <div style={HeadStyle}>Hi, Joe B.</div>
+        <div style={HeadStyle}>Hi, {props.props.name}</div>
         <div style={SubStyle}>Let's take a look at your classes and contacts.</div>
      </div>
     </Container>

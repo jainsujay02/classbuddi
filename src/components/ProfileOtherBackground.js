@@ -6,6 +6,11 @@ import InterestsList from './InterestsList';
 import SocialList from './SocialsList';
 import NameBlock from './NameBlock';
 
+import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import { onAuthStateChanged } from 'firebase/auth';
+import { getUserDataFromName, auth } from './utils/firebase';
+
 const Bg = styled.div`
     background-color: #EEEEEE;
     display: flex;
@@ -30,33 +35,58 @@ const HeaderStyle = {
     marginLeft: '125px',
     marginTop: '45px',
     marginBottom: '20px',
-    
+
     fontFamily: 'Poppins',
     fontStyle: 'normal',
     fontWeight: 600,
     fontSize: '22px',
     lineHeight: '72px',
     /* or 327% */
-    
+
     letterSpacing: '-0.25px',
-    
+
     /* black */
-    
+
     color: '#000000',
 }
 
-
 const ProfileOtherBackground = () => {
+    let { id } = useParams();
+    console.log(id);
+
+    // state variable to hold other student's profile object
+    const [otherStudent, setOtherStudent] = useState(null);
+
+    useEffect(() => {
+        onAuthStateChanged(auth, (user) => {
+          if (user) {
+            console.log("running use effect from profile other");
+            console.log(id);
+            const otherStudentPromise = getUserDataFromName(id);
+            otherStudentPromise.then((value) => {
+                // @Sujay - the request assumes that every student has a distinct name
+                // The value here is an array of students with the name id, but there would\
+                // always be only one element because of our assumption.
+                setOtherStudent(value[0]);
+            });
+          }
+          else {
+            console.log("Dashboard Err!!")
+          }
+        });
+      }, []);
+    console.log("Checking nullity", otherStudent);
+    if (!otherStudent?.name) return (<p>Loading...</p>);
     return(
         <Bg>
             <ClassBox>
-                <NameBlock/>
+                <NameBlock props = {otherStudent}/>
                 <p style={HeaderStyle}> Courses </p>
-                <ClassesStacked />
+                <ClassesStacked props = {otherStudent} />
                 <p style={HeaderStyle}> Interests </p>
-                <InterestsList/>
+                <InterestsList props = {otherStudent}/>
                 <p style={HeaderStyle}> Contact Information </p>
-                <SocialList/>
+                <SocialList props = {otherStudent}/>
             </ClassBox>
 
         </Bg>

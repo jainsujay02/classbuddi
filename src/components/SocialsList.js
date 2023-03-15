@@ -5,7 +5,7 @@ import InstagramIcon from '@mui/icons-material/Instagram';
 import GoogleIcon from '@mui/icons-material/Google';
 import Box from '@mui/material/Box';
 
-const SocialText = { 
+const SocialText = {
     fontFamily: 'Work Sans',
     fontStyle: 'normal',
     fontWeight: 500,
@@ -27,7 +27,7 @@ const SocialChip = styled(Chip)({
     alignItems: "center",
     padding: "10px",
     gap: "6px",
-    
+
 
     width: "164px",
     height: "40px",
@@ -44,15 +44,22 @@ const SocialChip = styled(Chip)({
 
 
 
-const SocialList = () => {
+const SocialList = (props) => {
     return (
         <Stack direction="row" spacing={'20px'} marginLeft= '119px'>
-            <Box sx={{marginTop: '7px'}} >
+            {/* <Box sx={{marginTop: '7px'}} >
                 <InstagramIcon></InstagramIcon>
-            </Box>
-            <SocialChip
-                label=<p style={SocialText}> Social1 </p>>
+                <p>{props.props.instagram}</p>
+            </Box> */}
+              <SocialChip
+                label=<p style={SocialText}> {props.props.instagram} </p>>
             </SocialChip>
+            <SocialChip
+                label=<p style={SocialText}> {props.props.reddit} </p>>
+            </SocialChip>
+            <SocialChip
+            label=<p style={SocialText}> {props.props.discord} </p>>
+        </SocialChip>
 
 
         </Stack>
@@ -60,4 +67,4 @@ const SocialList = () => {
 
 }
 
-export default SocialList; 
+export default SocialList;

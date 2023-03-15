@@ -14,50 +14,57 @@ import ProfileOtherBackground from "./ProfileOtherBackground";
 
 /*QUESTION
 * fixed scrolling function for lists?
-* how to dynamically pull list of students and class 
+* how to dynamically pull list of students and class
 */
 
-
-function createList(contactArray){
-  //need to know people?
-   //array of contacts
-  var numStudents = contactArray.length;
-  var contactList = [];
-  var i;
-  for (i = 0; i < numStudents; i++ ){
-    contactList[i] = (
-    <Grid item>
-      <Link href="'/'" 
-        underline="none"
-        > 
-          <DashboardCard
-            name={contactArray[i].name}
-            image={contactArray[i].image}
-          />
-      </Link>
-  </Grid>
-  )
-  }
-  return contactList;
+const ClassHeaderStyle = {
+  fontWeight: '600',
+  marginBottom: '30px',
+  fontSize: '22px'
 }
 
 function DashboardList(props){
-  //will replace this first div with a function to handle 
+  //will replace this first div with a function to handle
   //grabbing the header
-  var contactArray = props.classStudentList;
-  // var numStudents = contactArray.length;
-  // var contactList = [];
-  // var i;
+  if (!props.student?.courses) return (<p>Loading...</p>);
+  // @Sujay - I figured out this if statement that prevents loading a null coursemap :)
+  if (!props.courseMap?.size) return (<p>Loading...</p>)
+
+
+  const n1size = props.courseMap.get(props.student.courses[props.index]).length;
+
+  console.log("n1size is", n1size)
+
+  function Work () {
+    let arr = []
+    for (let i = 0; i < n1size && i < 4; i++ ) {
+      arr.push(props.courseMap.get(props.student.courses[props.index])[i].name);
+    }
+    return arr.map((n) =>
+    <Grid item>
+    <Link href={`/other/${n}`}
+      underline="none"
+      >
+      {/* @Sujay - you would need to customize this for your account if you don't write robust code to display classmate */}
+      <DashboardCard name = {n} />
+    </Link>
+  </Grid>
+  );
+  }
+
+  // const n1 = props.courseMap.get(props.student.courses[props.index])[0].name;
+  // const n2 = props.courseMap.get(props.student.courses[props.index])[1].name;
 
   return(
     <div>
-      <Box sx={{ 
+      <div style={ClassHeaderStyle}>{props.student.courses[props.index]}</div>
+      <Box sx={{
         width: 348,
         height: 'auto',
         display: 'flex',
-        }}> 
+        }}>
         <Grid container rowSpacing={3}>
-          {createList(contactArray)}
+          <Work/>
         </Grid>
       </Box>
     </div>
