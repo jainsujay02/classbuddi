@@ -2,7 +2,7 @@ import Stack from '@mui/material/Stack';
 import { styled } from '@mui/system';
 import Chip from '@mui/material/Chip';
 
-const InterestText = { 
+const InterestText = {
     fontFamily: 'Work Sans',
     fontStyle: 'normal',
     fontWeight: 500,
@@ -23,7 +23,7 @@ const InterestsChip = styled(Chip)({
     alignItems: "center",
     padding: "10px",
     gap: "6px",
-    
+
 
     width: "164px",
     height: "40px",
@@ -41,25 +41,27 @@ const InterestsChip = styled(Chip)({
 
 
 
-const InterestsList = () => {
+const InterestsList = (props) => {
+
+    function Work (){
+        let n1size = props.props.interests.length
+        console.log("what the fuck is worng here?", n1size)
+        let arr = []
+        for (let i = 0; i < n1size && i < 4; i++ ) {
+          arr.push(props.props.interests[i]);
+        }
+        return arr.map((n) =>
+        <InterestsChip
+        label=<p style={InterestText}> {n} </p>>
+    </InterestsChip>
+        );}
+
     return (
         <Stack direction="row" spacing={'20px'} marginLeft= '119px'>
-             
-            <InterestsChip 
-                label=<p style={InterestText}> interest1 </p>>  
-            </InterestsChip>
-
-            <InterestsChip 
-                label=<p style={InterestText}> interest2 </p>>
-            </InterestsChip>
-
-            <InterestsChip 
-                label=<p style={InterestText}> interest3 </p>>
-            </InterestsChip>
-
+            <Work/>
         </Stack>
     )
 
 }
 
-export default InterestsList; 
+export default InterestsList;

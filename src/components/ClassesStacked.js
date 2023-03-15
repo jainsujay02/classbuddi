@@ -39,20 +39,20 @@ const CNStyle = {
     marginLeft: '46px',
     width: '194px',
     height: '29px',
-    
+
     fontFamily: 'Poppins',
     fontStyle: 'normal',
     fontWeight: 500,
     fontSize: '18px',
     lineHeight: '28px',
     /* or 156% */
-    
+
     display: 'flex',
     alignItems: 'center',
     letterSpacing: '0.004em',
-    
+
     /* black */
-    
+
     color: "#000000",
 }
 
@@ -80,30 +80,38 @@ const CDStyle = {
 
 
 
-function ClassesStacked ({value}) {
+const ClassesStacked = (props) => {
+
+    function Work (){
+    let n1size = props.props.courses.length
+    console.log("what the fuck is worng here?", n1size)
+    let arr = []
+    for (let i = 0; i < n1size && i < 4; i++ ) {
+      arr.push(props.props.courses[i]);
+    }
+    return arr.map((n) =>
+    <ClassBox>
+
+    <Grid container spacing={0}>
+                    <Grid item xs={1}>
+                        <NextArrow> <EastIcon/> </NextArrow>
+                    </Grid>
+                    <Grid item xs={13}>
+                        <p style={CDStyle}>{n}</p>
+                    </Grid>
+                </Grid>
+                </ClassBox>
+    );
+    }
+
     return (
-        <Stack   
+        <Stack
         direction="column"
         justifyContent="center"
         alignItems="center"
         spacing={3}
         >
-            <ClassBox>
-
-                <Grid container spacing={1}>
-                    <Grid item xs={1}>
-                        <p style={CNStyle}>{value.name}</p>
-                    </Grid>
-                    <Grid item xs={1}>
-                        <NextArrow> <EastIcon/> </NextArrow> 
-                    </Grid>
-                    <Grid item xs={13}>
-                        <p style={CDStyle}>{value.title}</p>
-                    </Grid>
-                </Grid>
-
-            </ClassBox>
-            <br></br>
+            <Work/>
         </Stack>
     )
 

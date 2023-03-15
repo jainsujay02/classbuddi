@@ -17,7 +17,7 @@ const ProfilePictureContainer = styled(Avatar) ({
 
 const SaveContactButton = styled(Button) ({
     marginTop: '110px',
-    
+
     variant:"contained",
     justifyContent: 'center',
     alignItems: 'center',
@@ -26,14 +26,14 @@ const SaveContactButton = styled(Button) ({
     background: 'rgba(226, 188, 185, 0.5)',
     borderRadius: '20px',
     color: 'black',
-    
+
     fontFamily: 'Work Sans',
     fontStyle: 'normal',
     fontWeight: 500,
     fontSize: '12px',
     lineHeight: '16px',
 
-    
+
 
 })
 
@@ -57,7 +57,7 @@ const NameStyle = {
 
 }
 
-const TextStyle ={ 
+const TextStyle ={
 
     width: '599px',
     height: '75px',
@@ -72,7 +72,11 @@ const TextStyle ={
 }
 
 
-const NameBlock = () => {
+const NameBlock = (props) => {
+
+    let nsize = props.props.courses.length
+
+
     return (
         <Grid container spacing={2}>
             <Grid item xs={3}>
@@ -80,18 +84,15 @@ const NameBlock = () => {
             </Grid>
             <Grid item xs={3}>
                     <Box>
-                        <p style={NameStyle}>Joe Bruin</p>
+                        <p style={NameStyle}>{props.props.name}</p>
                     </Box>
                     <Box>
-                        <p style={TextStyle}>Lorem ipsum dolor sit amet, 
-                        consectetur adipiscing elit. 
-                        Integer pretium sollicitudin neque id vulputate. 
-                        Sed eget dolor a ligula auctor scelerisque </p>
+                        <p style={TextStyle}> {props.props.intro} </p>
                     </Box>
             </Grid>
-            <Grid item xs={3}> 
+            <Grid item xs={3}>
                 <Box sx={{marginTop: '115px'}}>
-                    <p style={TextStyle}> pronouns </p>
+                    <p style={TextStyle}> {props.props.pronouns} </p>
                 </Box>
             </Grid>
             <Grid item xs={3}>
@@ -99,8 +100,8 @@ const NameBlock = () => {
             </Grid>
         </Grid>
 
-        
-    
+
+
     )
 }
 
