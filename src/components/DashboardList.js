@@ -2,12 +2,8 @@ import DashboardCard from "./DashboardCard";
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Link from '@mui/material/Link';
+import ProfileOtherBackground from "./ProfileOtherBackground";
 
- const ClassHeaderStyle = {
-   fontWeight: '600',
-   marginBottom: '30px',
-   fontSize: '22px'
- }
 
 /* THIS COMPONENT'S FUNCTION
 * This component will inherit the DashboardCard components and will display
@@ -35,7 +31,7 @@ function DashboardList(props){
       <div style={ClassHeaderStyle}>{props.student.courses[props.index]}</div>
       <Box sx={{ 
         width: 348,
-        height: 368,
+        height: 'auto',
         display: 'flex',
         }}> 
         <Grid container rowSpacing={3}>
@@ -66,5 +62,6 @@ function DashboardList(props){
     </div>
   );
 }
+
 
 export default DashboardList;
