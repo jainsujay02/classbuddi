@@ -18,49 +18,51 @@ import Link from '@mui/material/Link';
 
 /*QUESTION
 * fixed scrolling function for lists?
-* how to dynamically pull list of students and class 
+* how to dynamically pull list of students and class
 */
 
 function DashboardList(props){
-  //will replace this first div with a function to handle 
+  //will replace this first div with a function to handle
   //grabbing the header
   if (!props.student?.courses) return (<p>Loading...</p>);
   // @Sujay - I figured out this if statement that prevents loading a null coursemap :)
   if (!props.courseMap?.size) return (<p>Loading...</p>)
-  const n1 = props.courseMap.get(props.student.courses[props.index])[0].name;
-  const n2 = props.courseMap.get(props.student.courses[props.index])[1].name;
+
+
+  const n1size = props.courseMap.get(props.student.courses[props.index]).length;
+
+  console.log("n1size is", n1size)
+
+  function Work () {
+    let arr = []
+    for (let i = 0; i < n1size && i < 4; i++ ) {
+      arr.push(props.courseMap.get(props.student.courses[props.index])[i].name);
+    }
+    return arr.map((n) =>
+    <Grid item>
+    <Link href={`/other/${n}`}
+      underline="none"
+      >
+      {/* @Sujay - you would need to customize this for your account if you don't write robust code to display classmate */}
+      <DashboardCard name = {n} />
+    </Link>
+  </Grid>
+  );
+  }
+
+  // const n1 = props.courseMap.get(props.student.courses[props.index])[0].name;
+  // const n2 = props.courseMap.get(props.student.courses[props.index])[1].name;
 
   return(
     <div>
       <div style={ClassHeaderStyle}>{props.student.courses[props.index]}</div>
-      <Box sx={{ 
+      <Box sx={{
         width: 348,
         height: 368,
         display: 'flex',
-        }}> 
+        }}>
         <Grid container rowSpacing={3}>
-          <Grid item>
-            <Link href={`/other/${n1}`}
-              underline="none"
-              > 
-              {/* @Sujay - you would need to customize this for your account if you don't write robust code to display classmate */}
-              <DashboardCard name = {n1} />
-            </Link>
-          </Grid>
-          <Grid item>
-            <Link href={`/other/${n2}`}
-              underline="none"
-              >
-              <DashboardCard name = {n2} />
-            </Link>
-          </Grid>
-          <Grid item>
-            <Link href="/" 
-              underline="none"
-              > 
-              <DashboardCard/>
-            </Link>
-          </Grid>
+          <Work/>
         </Grid>
       </Box>
     </div>
