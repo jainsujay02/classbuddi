@@ -20,8 +20,9 @@ import {Autocomplete} from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 //firebase imports
-import { updateUser, firebase} from "./utils/firebase";
+import { updateUser, firebase, storage} from "./utils/firebase";
 import { useNavigate } from "react-router-dom";
+import { ref, getDownloadURL, uploadBytesResumable } from "firebase/storage";
 
 const compsciclasses = [
   {label: 'CS 1 – Computer Science Seminar'},
@@ -138,12 +139,39 @@ const Form = () => {
     });
 
   };
-  const handleImageChange = e => {
-    if(e.target.files[0]) {
-      setProfileImage(e.target.files[0])
-      setButtonText("Uploaded")
-    }
+  const handleImageChange = async (e) => {
+    e.preventDefault();
+    console.log("changing image");
+    // if(e.target.files[0]) {
+    //   setProfileImage(e.target.files[0])
+    //   setButtonText("Uploaded")
+    // }
+    const file = e.target?.files[0]
+    console.log("target:",e.target.files[0]);
+    console.log(file)
 
+    if (!file) return;
+
+    const storageRef = await ref(storage, `images/${file.name}`);
+    const uploadTask = uploadBytesResumable(storageRef, file);
+
+    uploadTask.on("state_changed",
+      (snapshot) => {
+        const progress =
+          Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+        console.log(progress);
+      },
+      (error) => {
+        console.log("why this err");
+        console.log(error);
+      },
+      () => {
+        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+          setProfileImage(downloadURL)
+          console.log(downloadURL);
+        });
+      }
+    );
   };
   const handleSubmit = () => {
     console.log("submitting");
@@ -153,6 +181,7 @@ const Form = () => {
     //update database
     updateUser(formValues);
   };
+  console.log(profileImage);
   return (
     <Container>
         <Profiletitle></Profiletitle>
