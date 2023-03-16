@@ -118,12 +118,13 @@ const CourseForm = () => {
 
     //update database
     const course = id; //"CS 35L – Software Construction Lab";
-    console.log(filterUsers(checkValues.years, checkValues.interests, course));
+    // console.log(filterUsers(checkValues.years, checkValues.interests, course));
 
     const promise = filterUsers(
       checkValues.years,
       checkValues.interests,
-      course
+      course,
+      allStudentsInCourse
     );
     promise.then((value) => {
       setStudents(value);
