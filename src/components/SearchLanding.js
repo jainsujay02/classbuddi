@@ -105,26 +105,26 @@ const SearchCourseForm = () => {
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        console.log("running use effect from searchLanding");
+        // console.log("running use effect from searchLanding");
         const studentPromise = getUserData();
         studentPromise.then((value) => {
-          console.log(value);
+          // console.log(value);
           setStudent(value);
         });
       } else {
-        console.log("Dashboard Err!!");
+        // console.log("Dashboard Err!!");
       }
     });
   }, []);
-  console.log("Checking nullity", student);
+  // console.log("Checking nullity", student);
   // if (!studentCourses) return <p>Loading...</p>;
   if (!student?.name) return (<p>Loading...</p>);
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log(searchCourse);
+    // console.log(searchCourse);
   };
 
-  console.log("what are student courses", student);
+  // console.log("what are student courses", student);
 
 
   return (

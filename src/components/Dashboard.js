@@ -33,24 +33,24 @@ function Dashboard() {
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        console.log("entering Promise all");
+        // console.log("entering Promise all");
         // Implementing Promise all
         // const userPromise = getUserData();
         // Promise.all([userPromise]).then((values) => {
         //   console.log("dashboard user:", values[0]);
         //   setStudent(values[0]);
         // });
-        console.log("Dashboard onAuth!!");
-        console.log("returned from form");
+        // console.log("Dashboard onAuth!!");
+        // console.log("returned from form");
         const promise = getUserData();
         promise.then((value) => {
-          console.log("here", value);
+          // console.log("here", value);
           setStudent(value);
           const studentCourses = value.courses;
           studentCourses.forEach((course) => {
             const coursePromise = getStudentsInClass(course);
             coursePromise.then((cvalue) => {
-              console.log(cvalue);
+              // console.log(cvalue);
               let temp = [];
               if (!courseStudentMap.has(course)) {
                 cvalue.forEach((s) => {
@@ -66,11 +66,11 @@ function Dashboard() {
           setCourseStudentMap(courseStudentMap);
         });
         promise.catch((err) => {
-          console.log(err);
+          // console.log(err);
         });
       }
       else {
-        console.log("Dashboard Err!!")
+        // console.log("Dashboard Err!!")
       }
     });
   }, []);

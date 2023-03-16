@@ -66,7 +66,7 @@ const TextStyle = {
 
 const NameBlockProfile = (props) => {
   let nsize = props.props.courses.length;
-  console.log("checking profile picture", props.props.imgUrl);
+  // console.log("checking profile picture", props.props.imgUrl);
 
   if (props.props.imgUrl) {
     return (
