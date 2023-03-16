@@ -51,16 +51,21 @@ const SocialList = (props) => {
                 <InstagramIcon></InstagramIcon>
                 <p>{props.props.instagram}</p>
             </Box> */}
+            <a href = {`https://www.instagram.com/${props.props.instagram}/`}>
               <SocialChip
-                label=<p style={SocialText}> {props.props.instagram} </p>>
+                label=<p style={SocialText}> Instagram: {props.props.instagram} </p>>
             </SocialChip>
+            </a>
+            <a href = {`https://www.reddit.com/user/${props.props.reddit}/`}>
             <SocialChip
-                label=<p style={SocialText}> {props.props.reddit} </p>>
+                label=<p style={SocialText}> Reddit: {props.props.reddit} </p>>
             </SocialChip>
+            </a>
+            <a href = {`discordapp.com/users/${props.props.discord}/`}>
             <SocialChip
-            label=<p style={SocialText}> {props.props.discord} </p>>
+            label=<p style={SocialText}> Discord: {props.props.discord} </p>>
         </SocialChip>
-
+                     </a>
 
         </Stack>
     )
