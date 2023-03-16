@@ -15,6 +15,7 @@ import { ProtectedRoute } from "./components/ProtectedRoute";
 import { AuthProvider } from "./components/hooks/useAuth";
 import CourseForm from "./components/CoursePage";
 import ProfileBackground from "./components/ProfileBackground";
+import ProfileFormEditDisplay from "./components/profileformeditdisplay.js";
 
 function App() {
   return (
@@ -53,6 +54,14 @@ function App() {
           element={
             <ProtectedRoute>
               <ProfileForm />
+            </ProtectedRoute>
+          }
+        ></Route>
+        <Route
+          path="/ProfileFormEditDisplay"
+          element={
+            <ProtectedRoute>
+              <ProfileFormEditDisplay/>
             </ProtectedRoute>
           }
         ></Route>

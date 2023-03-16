@@ -18,14 +18,28 @@ import TagIcon from '@mui/icons-material/Tag';
 import styled from 'styled-components'
 import {Autocomplete} from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { useRef } from 'react';
 
 //firebase imports
-import { updateUser, firebase, auth, getUserData, storage} from "./utils/firebase";
+import { updateUser, firebase, auth, getUserData} from "./utils/firebase";
 import { onAuthStateChanged } from 'firebase/auth';
 import { useNavigate } from "react-router-dom";
 
 import { useEffect } from "react";
-import { ref, getDownloadURL, uploadBytesResumable } from "firebase/storage";
+
+const Container1 = styled.div`
+	background-color: #EEEEEE;
+	height: auto;
+	color: #333333;
+	padding: 30px 0 10px 0;
+    text-align: center;
+    h1{
+      font-family: 'Poppins', sans-serif;
+      font-size: 40px;
+    }
+
+  /* margin-bottom: 30px; */
+`
 
 const compsciclasses = [
   {label: 'CS 1 – Computer Science Seminar'},
@@ -115,44 +129,55 @@ const Container = styled.div`
     }
   /* margin-bottom: 60px; */
 `
-const defaultValues = {
-  name: "",
-  major: "",
-  year: "",
-  pronouns:"",
-  instagram: "",
-  reddit: "",
-  discord:"",
-  courses: [],
-  interests: [],
-  intro:"",
 
-};
-const Form = () => {
-  const [formValues, setFormValues] = useState(defaultValues);
+const ProfileFormEdit = (props) => {
+
   const [buttonText, setButtonText] = useState("Upload");
   const [profileImage, setProfileImage] = useState(null);
   const navigate = useNavigate();
   // state variable to hold student's profile object
-  const [student, setStudent] = useState(null);
 
-  useEffect(() => {
-      onAuthStateChanged(auth, (user) => {
-        if (user) {
-          console.log("running use effect from profile");
-          const studentPromise = getUserData();
-          studentPromise.then((value) => {
-              console.log(value);
-              setStudent(value);
-          });
-        }
-        else {
-          console.log("Dashboard Err!!")
-        }
-      });
-    }, []);
-  console.log("Checking nullity", student);
-  if (!student?.name) return (<p>Loading...</p>);
+  const defaultValues = {
+    name: props.props.name,
+    major: props.props.major,
+    year:  props.props.year,
+    pronouns: props.props.pronouns,
+    instagram: props.props.instagram,
+    reddit: props.props.reddit,
+    discord: props.props.discord,
+    courses: props.props.courses,
+    interests:  props.props.interests,
+    intro: props.props.intro,
+
+  };
+  const [formValues, setFormValues] = useState(defaultValues);
+
+  function PastCourses (){
+    let n1size = props.props.courses.length
+    let arr = []
+    for (let i = 0; i < n1size && i < 4; i++ ) {
+      arr.push(props.props.courses[i]);
+    }
+    return arr.map((n) =>
+
+    <p>{n} </p>
+
+    );
+    }
+
+
+  function PastInterests (){
+    let n1size = props.props.interests.length
+    let arr = []
+    for (let i = 0; i < n1size && i < 4; i++ ) {
+      arr.push(props.props.interests[i]);
+    }
+    return arr.map((n) =>
+
+    <p>{n} </p>
+
+    );
+    }
 
   // const [courseText, setCourseText] = useState([compsciclasses[1]]);
   const handleInputChange = (e) => {
@@ -163,39 +188,12 @@ const Form = () => {
     });
 
   };
-  const handleImageChange = async (e) => {
-    e.preventDefault();
-    console.log("changing image");
-    // if(e.target.files[0]) {
-    //   setProfileImage(e.target.files[0])
-    //   setButtonText("Uploaded")
-    // }
-    const file = e.target?.files[0]
-    console.log("target:",e.target.files[0]);
-    console.log(file)
+  const handleImageChange = e => {
+    if(e.target.files[0]) {
+      setProfileImage(e.target.files[0])
+      setButtonText("Uploaded")
+    }
 
-    if (!file) return;
-
-    const storageRef = await ref(storage, `images/${file.name}`);
-    const uploadTask = uploadBytesResumable(storageRef, file);
-
-    uploadTask.on("state_changed",
-      (snapshot) => {
-        const progress =
-          Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
-        console.log(progress);
-      },
-      (error) => {
-        console.log("why this err");
-        console.log(error);
-      },
-      () => {
-        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-          setProfileImage(downloadURL)
-          console.log(downloadURL);
-        });
-      }
-    );
   };
   const handleSubmit = () => {
     console.log("submitting");
@@ -205,20 +203,21 @@ const Form = () => {
     //update database
     updateUser(formValues);
   };
-  console.log(profileImage);
   return (
     <Container>
-        <Profiletitle></Profiletitle>
+       <Container1>
+        <h1 style={{marginTop: '-50px'}}>Update Your Information</h1>
+    </Container1>
         <form>
         <Grid container justifyContent = {'space-around'}  columnSpacing = "150">
         <Grid item xs={6} direction="column" align={"right"}>
           <br></br>
           <TextField fullWidth required
             id="name-input"
-            name="name"
+            name = "name"
             label="Name"
             type="text"
-            value={formValues.name}
+            value= {formValues.name}
             onChange={handleInputChange}
             style = {{width: 300}}
             sx= {{backgroundColor: 'white'}}
@@ -262,7 +261,7 @@ const Form = () => {
             name="major"
             label="Major"
             type="text"
-            value={formValues.age}
+            value={formValues.major}
             onChange={handleInputChange}
           />
            <br></br>
@@ -364,8 +363,10 @@ const Form = () => {
       </Grid>
       <Grid item direction="column"  align = "center"  xs={6.8} >
       <br></br>
-        <p>Select your courses</p>
-        <Autocomplete
+        <p>Change your courses. You must select all your courses again. </p>
+        <p> Your current courses are:</p>
+          <PastCourses/>
+          <Autocomplete
           multiple
           sx= {{backgroundColor: 'white'}}
           id="courses-input"
@@ -373,15 +374,17 @@ const Form = () => {
           label=" Courses"
           type="text"
 
+
           onChange={(event, value) => {
             let coursesList = [];
             value.forEach((course) => {
             coursesList.push(course.label)
           })
 
-        setFormValues({
+        setFormValues(
+          {
           ...formValues,
-          courses: coursesList,
+          courses: coursesList
          });
      }
      } //** on every input change hitting my api**
@@ -400,7 +403,9 @@ const Form = () => {
 
       />
       <br></br>
-<p> Select a few hobbies or interests</p>
+    <p> Change your hobbies or interests. You must select all hobbies/interests again.</p>
+        <p> Your current hobbies/interests are:</p>
+        <PastInterests/>
 <Autocomplete
           multiple
           sx= {{backgroundColor: 'white'}}
@@ -457,7 +462,7 @@ const Form = () => {
           <ThemeProvider theme={theme}>
             <Button variant="contained" type="button"
                     color = 'buttonColor'
-                    onClick={() => {handleSubmit(); navigate("/dashboard");}}
+                    onClick={() => {handleSubmit(); navigate("/profile");}}
                     style={{textTransform: 'none'}}
                     sx={{boxShadow: 0, marginTop: 3, marginBottom: 5, marginLeft: '475px', gap: 6, padding: '16px 20px', borderRadius: 10, border: '1.5px solid #A1C4FD', width: '235px', height: 56,
                     fontSize: '14px', lineHeight: 20, letterSpacing: 0.4, fontFamily: 'Poppins', fontStyle: 'normal', fontWeight: 500, justifyContent: 'center', display: 'flex'}}>
@@ -470,4 +475,4 @@ const Form = () => {
 
   );
 };
-export default Form;
+export default ProfileFormEdit;

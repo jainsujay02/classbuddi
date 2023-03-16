@@ -286,7 +286,7 @@ export const getUserDataFromName = async (id) => {
 };
 
 const dbRef = collection(db, "ProfileFormData");
-export const filterUsers = async (filterYear, filterInterests, filterCourse) => { 
+export const filterUsers = async (filterYear, filterInterests, filterCourse) => {
   let iList = [];
   let cList = [];
   let yList = [];
@@ -366,11 +366,13 @@ export const filterUsers = async (filterYear, filterInterests, filterCourse) => 
 
   const a = []
   for (let item of retList) {
+    if (item !== uid){
+      const docRef = doc(dbRef, item).withConverter(studentConverter);
+      const docSnap = await getDoc(docRef);
+      a.push(docSnap.data());
+    }
 
-    const docRef = doc(dbRef, item).withConverter(studentConverter);
-    const docSnap = await getDoc(docRef);
-    a.push(docSnap.data());
-    
+
   };
 
   //console.log(a);
