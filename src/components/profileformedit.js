@@ -193,14 +193,14 @@ const ProfileFormEdit = (props) => {
   };
   const handleImageChange = async (e) => {
     e.preventDefault();
-    console.log("changing image");
+    // console.log("changing image");
     // if(e.target.files[0]) {
     //   setProfileImage(e.target.files[0])
     //   setButtonText("Uploaded")
     // }
     const file = e.target?.files[0]
-    console.log("target:",e.target.files[0]);
-    console.log(file)
+    // console.log("target:",e.target.files[0]);
+    // console.log(file)
 
     if (!file) return;
 
@@ -211,26 +211,26 @@ const ProfileFormEdit = (props) => {
       (snapshot) => {
         const progress =
           Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
-        console.log(progress);
+        // console.log(progress);
       },
       (error) => {
-        console.log("why this err");
-        console.log(error);
+        // console.log("why this err");
+        // console.log(error);
       },
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
           setProfileImage(downloadURL)
-          console.log(downloadURL);
+          // console.log(downloadURL);
           formValues.imgUrl = downloadURL;
         });
       }
     );
   };
   const handleSubmit = () => {
-    console.log("submitting");
-    console.log(formValues);
-    console.log(profileImage)
-    console.log("FORM:",formValues);
+    // console.log("submitting");
+    // console.log(formValues);
+    // console.log(profileImage)
+    // console.log("FORM:",formValues);
     //update database
     updateUser(formValues);
   };

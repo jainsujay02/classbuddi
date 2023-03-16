@@ -33,7 +33,7 @@ function DashboardList(props){
 
   const n1size = props.courseMap.get(props.student.courses[props.index]).length;
 
-  console.log("n1size is", n1size)
+  // console.log("n1size is", n1size)
 
   function Work () {
     let arr = []

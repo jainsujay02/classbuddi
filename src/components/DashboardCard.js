@@ -36,22 +36,22 @@ function handleProfileImage(image) {
 }
 
 function DashboardCard(props) {
-  console.log("what is the props here?", props);
+  // console.log("what is the props here?", props);
   let image = handleProfileImage(props.image);
   // state variable to hold student's profile object
   const [student, setStudent] = useState(null);
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
-      console.log("Header user", user);
+      // console.log("Header user", user);
       if (user) {
-        console.log("running use effect from profile");
+        // console.log("running use effect from profile");
         const studentPromise = getUserDataFromName(props.name);
         studentPromise.then((value) => {
-          console.log(value);
+          // console.log(value);
           setStudent(value[0]);
         });
       } else {
-        console.log("dashboard card err!!");
+        // console.log("dashboard card err!!");
       }
     });
   }, []);

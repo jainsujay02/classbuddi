@@ -86,7 +86,7 @@ const ClassesStacked = (props) => {
 
     function Work (){
     let n1size = props.props.courses.length
-    console.log("what is worng here?", n1size)
+    // console.log("what is worng here?", n1size)
     let arr = []
     for (let i = 0; i < n1size && i < 4; i++ ) {
       arr.push(props.props.courses[i]);

@@ -58,14 +58,14 @@ function Navbar() {
   const [student, setStudent] = useState(null);
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
-      console.log("Header user", user);
+      // console.log("Header user", user);
       if (user) {
         setLoginStatus(true);
         login(user);
-        console.log("running use effect from profile");
+        // console.log("running use effect from profile");
           const studentPromise = getUserData();
           studentPromise.then((value) => {
-              console.log(value);
+              // console.log(value);
               setStudent(value);
           });
       } else {
@@ -109,7 +109,7 @@ function Navbar() {
                 style={{textTransform: 'none', marginLeft: '12px', fontFamily: 'Poppins', fontStyle: 'normal', fontSize: "17.5px", color: "#333333"}}
                 onClick={async () => {
                   await signInWithGoogle();
-                  console.log("returned from sign in");
+                  // console.log("returned from sign in");
                   if (newUser){
                     navigate("/profileform");
                   } else {
@@ -126,7 +126,7 @@ function Navbar() {
                 style={{textTransform: 'none', marginLeft: '12px', fontFamily: 'Poppins', fontStyle: 'normal', fontSize: "17.5px", color: "#333333"}}
                 onClick={async () => {
                   await signOutOfApp();
-                  console.log("returned from sign out");
+                  // console.log("returned from sign out");
                   navigate("/");
                 }}
               >
@@ -175,7 +175,7 @@ function Navbar() {
                 style={{textTransform: 'none', marginLeft: '12px', fontFamily: 'Poppins', fontStyle: 'normal', fontSize: "17.5px", color: "#333333"}}
                 onClick={async () => {
                   await signInWithGoogle();
-                  console.log("returned from sign in");
+                  // console.log("returned from sign in");
                   if (newUser){
                     navigate("/profileform");
                   } else {
@@ -192,7 +192,7 @@ function Navbar() {
                 style={{textTransform: 'none', marginLeft: '12px', fontFamily: 'Poppins', fontStyle: 'normal', fontSize: "17.5px", color: "#333333"}}
                 onClick={async () => {
                   await signOutOfApp();
-                  console.log("returned from sign out");
+                  // console.log("returned from sign out");
                   navigate("/");
                 }}
               >

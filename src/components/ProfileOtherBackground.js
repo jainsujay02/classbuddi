@@ -52,7 +52,7 @@ const HeaderStyle = {
 
 const ProfileOtherBackground = () => {
     let { id } = useParams();
-    console.log(id);
+    // console.log(id);
 
     // state variable to hold other student's profile object
     const [otherStudent, setOtherStudent] = useState(null);
@@ -60,8 +60,8 @@ const ProfileOtherBackground = () => {
     useEffect(() => {
         onAuthStateChanged(auth, (user) => {
           if (user) {
-            console.log("running use effect from profile other");
-            console.log(id);
+            // console.log("running use effect from profile other");
+            // console.log(id);
             const otherStudentPromise = getUserDataFromName(id);
             otherStudentPromise.then((value) => {
                 // @Sujay - the request assumes that every student has a distinct name
@@ -71,11 +71,11 @@ const ProfileOtherBackground = () => {
             });
           }
           else {
-            console.log("Dashboard Err!!")
+            // console.log("Dashboard Err!!")
           }
         });
       }, []);
-    console.log("Checking nullity", otherStudent);
+    // console.log("Checking nullity", otherStudent);
     if (!otherStudent?.name) return (<p>Loading...</p>);
     return(
         <Bg>

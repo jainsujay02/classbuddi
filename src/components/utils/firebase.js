@@ -63,14 +63,14 @@ export const signInWithGoogle = () =>
       // IdP data available using getAdditionalUserInfo(result)
       newUser = getAdditionalUserInfo(result).isNewUser;
 
-      console.log(newUser);
-      console.log(userDetails);
+      // console.log(newUser);
+      // console.log(userDetails);
     })
     .catch((error) => {
       // Handle Errors here.
       // const errorCode = error.code;
       const errorMessage = error.message;
-      console.log(errorMessage);
+      // console.log(errorMessage);
       // The email of the user's account used.
       // const email = error.customData.email;
       // The AuthCredential type that was used.
@@ -97,11 +97,11 @@ export const userSignInStatus = () =>
 export const signOutOfApp = () =>
   signOut(auth)
     .then(() => {
-      console.log("Sign-out successful.");
+      // console.log("Sign-out successful.");
     })
     .catch((error) => {
       // An error happened.
-      console.log(error);
+      // console.log(error);
     });
 
 export const authListener = () => {
@@ -209,7 +209,7 @@ onAuthStateChanged(auth, (user) => {
     uid = user.uid;
   }
   else {
-    console.log("Error USER LOGGED OUT");
+    // console.log("Error USER LOGGED OUT");
   }
 });
 
@@ -242,11 +242,11 @@ export const getUserData = async () => {
   const docSnap = await getDoc(docRef);
   if (docSnap.exists()) {
     const student = docSnap.data();
-    console.log("returning to dashboard");
+    // console.log("returning to dashboard");
     return student;
   } else {
     // doc.data() will be undefined in this case
-    console.log("No such document!");
+    // console.log("No such document!");
   }
 };
 
@@ -257,7 +257,7 @@ export const getStudentsInClass = async (studentCourse) => {
     where("courses", "array-contains", studentCourse)
   ).withConverter(studentConverter);
   const querySnapshot = await getDocs(q);
-  console.log("query complete");
+  // console.log("query complete");
   // console.log(querySnapshot);
   var arr = []
   querySnapshot.forEach((doc) => {
@@ -278,14 +278,14 @@ export const getUserDataFromName = async (id) => {
     where("name", "==", id)
   ).withConverter(studentConverter);
   const querySnapshot = await getDocs(q);
-  console.log("query complete");
+  // console.log("query complete");
   var arr = []
   querySnapshot.forEach((doc) => {
     // doc.data() is never undefined for query doc snapshots
     // console.log(doc.data());
     const data = doc.data();
     arr.push(data);
-    console.log("Other Student", data);
+    // console.log("Other Student", data);
   });
   return arr;
 };
@@ -296,9 +296,9 @@ export const filterUsers = async (filterYear, filterInterests, filterCourse, stu
   let cList = [];
   let yList = [];
   let retList = [];
-  console.log("students in course", studentsInCourse);
+  // console.log("students in course", studentsInCourse);
   if (studentsInCourse.length === 0) {
-    console.log("no students in this course, returning early");
+    // console.log("no students in this course, returning early");
     alert("Cannot filter students in an empty class");
     return;
   }
@@ -367,7 +367,7 @@ export const filterUsers = async (filterYear, filterInterests, filterCourse, stu
   // Showing all users in course if filtering both empty (default)
   if (filterYear.length === 0 && filterInterests.length === 0) {retList.push(...cList);}
 
-  console.log(retList);
+  // console.log(retList);
 
   retList.forEach((item) => {
 

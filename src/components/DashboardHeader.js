@@ -20,7 +20,7 @@ const SubStyle = {
 
 function DashboardHeader(props) {
   if (!props.props?.name) return (<p>Loading...</p>);
-  console.log("this is student", props.props);
+  // console.log("this is student", props.props);
   return(
     <Container>
       <div>

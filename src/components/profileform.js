@@ -140,19 +140,19 @@ const Form = () => {
   useEffect(() => {
       onAuthStateChanged(auth, (user) => {
         if (user) {
-          console.log("running use effect from profile");
+          // console.log("running use effect from profile");
           const studentPromise = getUserData();
           studentPromise.then((value) => {
-              console.log(value);
+              // console.log(value);
               setStudent(value);
           });
         }
         else {
-          console.log("Dashboard Err!!")
+          // console.log("Dashboard Err!!")
         }
       });
     }, []);
-  console.log("Checking nullity", student);
+  // console.log("Checking nullity", student);
 
   // const [courseText, setCourseText] = useState([compsciclasses[1]]);
   const handleInputChange = (e) => {
@@ -165,14 +165,14 @@ const Form = () => {
   };
   const handleImageChange = async (e) => {
     e.preventDefault();
-    console.log("changing image");
+    // console.log("changing image");
     // if(e.target.files[0]) {
     //   setProfileImage(e.target.files[0])
     //   setButtonText("Uploaded")
     // }
     const file = e.target?.files[0]
-    console.log("target:",e.target.files[0]);
-    console.log(file)
+    // console.log("target:",e.target.files[0]);
+    // console.log(file)
 
     if (!file) return;
 
@@ -183,30 +183,30 @@ const Form = () => {
       (snapshot) => {
         const progress =
           Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
-        console.log(progress);
+        // console.log(progress);
       },
       (error) => {
-        console.log("why this err");
-        console.log(error);
+        // console.log("why this err");
+        // console.log(error);
       },
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
           setProfileImage(downloadURL)
-          console.log(downloadURL);
+          // console.log(downloadURL);
           formValues.imgUrl = downloadURL;
         });
       }
     );
   };
   const handleSubmit = () => {
-    console.log("submitting");
-    console.log(formValues);
-    console.log(profileImage)
-    console.log("FORM:",formValues);
+    // console.log("submitting");
+    // console.log(formValues);
+    // console.log(profileImage)
+    // console.log("FORM:",formValues);
     //update database
     updateUser(formValues);
   };
-  console.log(profileImage);
+  // console.log(profileImage);
   return (
     <Container>
         <Profiletitle></Profiletitle>
