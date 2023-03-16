@@ -126,7 +126,8 @@ class Student {
     instagram,
     discord,
     reddit,
-    intro
+    intro,
+    imgUrl
   ) {
     this.name = name;
     this.major = major;
@@ -138,6 +139,7 @@ class Student {
     this.discord = discord;
     this.reddit = reddit;
     this.intro = intro;
+    this.imgUrl = imgUrl;
   }
   toString() {
     return (
@@ -178,6 +180,7 @@ const studentConverter = {
       discord: student.discord,
       reddit: student.reddit,
       intro: student.intro,
+      imgUrl: student.imgUrl
     };
   },
   fromFirestore: (snapshot, options) => {
@@ -192,7 +195,8 @@ const studentConverter = {
       data.instagram,
       data.discord,
       data.reddit,
-      data.intro
+      data.intro,
+      data.imgUrl
     );
   },
 };
@@ -224,7 +228,8 @@ export const updateUser = (formValues) => {
       formValues.instagram,
       formValues.discord,
       formValues.reddit,
-      formValues.intro
+      formValues.intro,
+      formValues.imgUrl
     )
   );
 };

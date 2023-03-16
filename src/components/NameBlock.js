@@ -76,32 +76,54 @@ const NameBlock = (props) => {
 
     let nsize = props.props.courses.length
 
-
-    return (
-        <Grid container spacing={2}>
-            <Grid item xs={3}>
-            <ProfilePictureContainer alt="Avatar" src={ProfilePicture}> </ProfilePictureContainer>
-            </Grid>
-            <Grid item xs={3}>
-                    <Box>
-                        <p style={NameStyle}>{props.props.name}</p>
+    if (props.props.imgUrl) {
+        return (
+            <Grid container spacing={2}>
+                <Grid item xs={3}>
+                <ProfilePictureContainer alt="Avatar" src={props.props.imgUrl}> </ProfilePictureContainer>
+                </Grid>
+                <Grid item xs={3}>
+                        <Box>
+                            <p style={NameStyle}>{props.props.name}</p>
+                        </Box>
+                        <Box>
+                            <p style={TextStyle}> {props.props.intro} </p>
+                        </Box>
+                </Grid>
+                <Grid item xs={3}>
+                    <Box sx={{marginTop: '115px'}}>
+                        <p style={TextStyle}> {props.props.pronouns} </p>
                     </Box>
-                    <Box>
-                        <p style={TextStyle}> {props.props.intro} </p>
+                </Grid>
+                <Grid item xs={3}>
+                </Grid>
+            </Grid>
+        )
+    }
+    else {
+        return (
+            <Grid container spacing={2}>
+                <Grid item xs={3}>
+                <ProfilePictureContainer alt="Avatar" src={ProfilePicture}> </ProfilePictureContainer>
+                </Grid>
+                <Grid item xs={3}>
+                        <Box>
+                            <p style={NameStyle}>{props.props.name}</p>
+                        </Box>
+                        <Box>
+                            <p style={TextStyle}> {props.props.intro} </p>
+                        </Box>
+                </Grid>
+                <Grid item xs={3}>
+                    <Box sx={{marginTop: '115px'}}>
+                        <p style={TextStyle}> {props.props.pronouns} </p>
                     </Box>
+                </Grid>
+                <Grid item xs={3}>
+                </Grid>
             </Grid>
-            <Grid item xs={3}>
-                <Box sx={{marginTop: '115px'}}>
-                    <p style={TextStyle}> {props.props.pronouns} </p>
-                </Box>
-            </Grid>
-            <Grid item xs={3}>
-            </Grid>
-        </Grid>
-
-
-
-    )
+        )
+    }
 }
 
 export default NameBlock;
