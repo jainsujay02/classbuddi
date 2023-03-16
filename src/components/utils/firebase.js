@@ -291,12 +291,17 @@ export const getUserDataFromName = async (id) => {
 };
 
 const dbRef = collection(db, "ProfileFormData");
-export const filterUsers = async (filterYear, filterInterests, filterCourse) => {
+export const filterUsers = async (filterYear, filterInterests, filterCourse, studentsInCourse) => {
   let iList = [];
   let cList = [];
   let yList = [];
   let retList = [];
-
+  console.log("students in course", studentsInCourse);
+  if (studentsInCourse.length === 0) {
+    console.log("no students in this course, returning early");
+    alert("Cannot filter students in an empty class");
+    return;
+  }
   if (filterCourse.length !== 0) {
     const c = query(dbRef, where("courses", "array-contains", filterCourse) );
 
