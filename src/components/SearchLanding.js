@@ -162,7 +162,7 @@ const SearchCourseForm = () => {
               )}
             />
             <br></br>
-            <Link to={`/search/${searchCourse.label}`}>
+            <Link to={`/search/${searchCourse.label}`} style={{ textDecoration: "none" }}>
               <Button
                 type="submit"
                 size="large"
