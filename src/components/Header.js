@@ -105,7 +105,7 @@ function Navbar() {
                 await signInWithGoogle();
                 console.log("returned from sign in");
                 if (newUser){
-                  navigate("/profile");
+                  navigate("/profileform");
                 } else {
                   navigate("/dashboard");
                 }

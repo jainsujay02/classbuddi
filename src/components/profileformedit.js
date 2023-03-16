@@ -18,14 +18,16 @@ import TagIcon from '@mui/icons-material/Tag';
 import styled from 'styled-components'
 import {Autocomplete} from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { useRef } from 'react';
+
 
 //firebase imports
-import { updateUser, firebase, auth, getUserData} from "./utils/firebase";
+import { updateUser, firebase, auth, getUserData, storage} from "./utils/firebase";
 import { onAuthStateChanged } from 'firebase/auth';
 import { useNavigate } from "react-router-dom";
 
 import { useEffect } from "react";
+import { ref, getDownloadURL, uploadBytesResumable } from "firebase/storage";
+
 
 const Container1 = styled.div`
 	background-color: #EEEEEE;
@@ -148,6 +150,7 @@ const ProfileFormEdit = (props) => {
     courses: props.props.courses,
     interests:  props.props.interests,
     intro: props.props.intro,
+    imgUrl: "",
 
   };
   const [formValues, setFormValues] = useState(defaultValues);
@@ -188,12 +191,40 @@ const ProfileFormEdit = (props) => {
     });
 
   };
-  const handleImageChange = e => {
-    if(e.target.files[0]) {
-      setProfileImage(e.target.files[0])
-      setButtonText("Uploaded")
-    }
+  const handleImageChange = async (e) => {
+    e.preventDefault();
+    console.log("changing image");
+    // if(e.target.files[0]) {
+    //   setProfileImage(e.target.files[0])
+    //   setButtonText("Uploaded")
+    // }
+    const file = e.target?.files[0]
+    console.log("target:",e.target.files[0]);
+    console.log(file)
 
+    if (!file) return;
+
+    const storageRef = await ref(storage, `images/${file.name}`);
+    const uploadTask = uploadBytesResumable(storageRef, file);
+
+    uploadTask.on("state_changed",
+      (snapshot) => {
+        const progress =
+          Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+        console.log(progress);
+      },
+      (error) => {
+        console.log("why this err");
+        console.log(error);
+      },
+      () => {
+        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+          setProfileImage(downloadURL)
+          console.log(downloadURL);
+          formValues.imgUrl = downloadURL;
+        });
+      }
+    );
   };
   const handleSubmit = () => {
     console.log("submitting");
@@ -303,7 +334,7 @@ const ProfileFormEdit = (props) => {
         </Button >
         <br></br>
         <p> How should people contact you?</p>
-        <TextField
+        <TextField required
         sx= {{backgroundColor: 'white'}}
         value={formValues.instagram}
         onChange={handleInputChange}

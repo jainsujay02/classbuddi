@@ -96,7 +96,6 @@ const NameBlock = (props) => {
                 </Box>
             </Grid>
             <Grid item xs={3}>
-                <SaveContactButton><p> Save Contact </p></SaveContactButton>
             </Grid>
         </Grid>
 

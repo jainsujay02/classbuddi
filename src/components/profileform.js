@@ -126,6 +126,7 @@ const defaultValues = {
   courses: [],
   interests: [],
   intro:"",
+  imgUrl: "",
 
 };
 const Form = () => {
@@ -152,7 +153,6 @@ const Form = () => {
       });
     }, []);
   console.log("Checking nullity", student);
-  if (!student?.name) return (<p>Loading...</p>);
 
   // const [courseText, setCourseText] = useState([compsciclasses[1]]);
   const handleInputChange = (e) => {
@@ -193,6 +193,7 @@ const Form = () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
           setProfileImage(downloadURL)
           console.log(downloadURL);
+          formValues.imgUrl = downloadURL;
         });
       }
     );
@@ -304,7 +305,7 @@ const Form = () => {
         </Button >
         <br></br>
         <p> How should people contact you?</p>
-        <TextField
+        <TextField required
         sx= {{backgroundColor: 'white'}}
         value={formValues.instagram}
         onChange={handleInputChange}

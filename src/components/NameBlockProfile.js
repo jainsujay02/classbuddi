@@ -96,7 +96,7 @@ const NameBlockProfile = (props) => {
                 </Box>
             </Grid>
             <Grid item xs={3}>
-                <Link to = "/profileform" style={{ textDecoration: 'none' }}>
+                <Link to = "/profileformeditdisplay" style={{ textDecoration: 'none' }}>
                 <EditProfileButton><p> Edit Profile </p></EditProfileButton>
                 </Link>
             </Grid>

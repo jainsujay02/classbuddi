@@ -33,18 +33,18 @@ const HeaderStyle = {
     marginLeft: '125px',
     marginTop: '45px',
     marginBottom: '20px',
-    
+
     fontFamily: 'Poppins',
     fontStyle: 'normal',
     fontWeight: 600,
     fontSize: '22px',
     lineHeight: '72px',
     /* or 327% */
-    
+
     letterSpacing: '-0.25px',
-    
+
     /* black */
-    
+
     color: '#000000',
 }
 
