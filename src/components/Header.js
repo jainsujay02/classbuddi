@@ -100,11 +100,6 @@ function Navbar() {
               about us
             </Link>
             {!loginStatus && (
-              <Link to="/join" className={classes.link}>
-                join
-              </Link>
-            )}
-            {!loginStatus && (
               <Button
                 variant="text"
                 sx={{
@@ -122,7 +117,7 @@ function Navbar() {
                   }
                 }}
               >
-                log in
+                join / log in
               </Button>
             )}
             {loginStatus && (
@@ -171,11 +166,6 @@ function Navbar() {
               about us
             </Link>
             {!loginStatus && (
-              <Link to="/join" className={classes.link}>
-                join
-              </Link>
-            )}
-            {!loginStatus && (
               <Button
                 variant="text"
                 sx={{
@@ -193,7 +183,7 @@ function Navbar() {
                   }
                 }}
               >
-                log in
+                join / log in
               </Button>
             )}
             {loginStatus && (
