@@ -1,107 +1,133 @@
-import Avatar from '@mui/material/Avatar';
-import { styled } from '@mui/system';
-import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid';
-import Button from '@mui/material/Button';
+import Avatar from "@mui/material/Avatar";
+import { styled } from "@mui/system";
+import Box from "@mui/material/Box";
+import Grid from "@mui/material/Grid";
+import Button from "@mui/material/Button";
 import ProfilePicture from "../images/ProfilePicture.svg";
+import { Link } from "react-router-dom";
 
+const ProfilePictureContainer = styled(Avatar)({
+  marginTop: "90px",
+  marginLeft: "110px",
+  width: "96px",
+  height: "94px",
+});
 
-const ProfilePictureContainer = styled(Avatar) ({
-    marginTop: '90px',
-    marginLeft: '110px',
-    width: '96px',
-    height: '94px',
-})
+const EditProfileButton = styled(Button)({
+  marginTop: "110px",
 
+  variant: "contained",
+  justifyContent: "center",
+  alignItems: "center",
+  width: "128px",
+  height: "32px",
+  background: "rgba(226, 188, 185, 0.5)",
+  borderRadius: "20px",
+  color: "black",
 
-
-const EditProfileButton = styled(Button) ({
-    marginTop: '110px',
-    
-    variant:"contained",
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: '128px',
-    height: '32px',
-    background: 'rgba(226, 188, 185, 0.5)',
-    borderRadius: '20px',
-    color: 'black',
-    
-    fontFamily: 'Work Sans',
-    fontStyle: 'normal',
-    fontWeight: 500,
-    fontSize: '12px',
-    lineHeight: '16px',
-
-    
-
-})
+  fontFamily: "Work Sans",
+  fontStyle: "normal",
+  fontWeight: 500,
+  fontSize: "12px",
+  lineHeight: "16px",
+});
 
 const NameStyle = {
-    width: '400px',
-    height: '40px',
-    marginTop: '80px',
+  width: "400px",
+  height: "40px",
+  marginTop: "80px",
 
-    fontFamily: 'Poppins',
-    fontStyle: 'normal',
-    fontWeight: 600,
-    fontSize: '40px',
-    lineHeight: '72px',
-    /* or 180% */
+  fontFamily: "Poppins",
+  fontStyle: "normal",
+  fontWeight: 600,
+  fontSize: "40px",
+  lineHeight: "72px",
+  /* or 180% */
 
-    letterSpacing: '-0.25px',
+  letterSpacing: "-0.25px",
 
-    /* black */
+  /* black */
 
-    color:'#000000',
+  color: "#000000",
+};
 
-}
+const TextStyle = {
+  width: "599px",
+  height: "75px",
 
-const TextStyle ={ 
+  fontFamily: "Poppins",
+  fontStyle: "normal",
+  fontWeight: 400,
+  fontSize: "16px",
+  lineHeight: "24px",
 
-    width: '599px',
-    height: '75px',
+  color: "#8C8C8C",
+};
 
-    fontFamily: 'Poppins',
-    fontStyle: 'normal',
-    fontWeight: 400,
-    fontSize: '16px',
-    lineHeight: '24px',
+const NameBlockProfile = (props) => {
+  let nsize = props.props.courses.length;
+  console.log("checking profile picture", props.props.imgUrl);
 
-    color: '#8C8C8C',
-}
-
-
-const NameBlockProfile = () => {
+  if (props.props.imgUrl) {
+    return (
+      <Grid container spacing={2}>
+        <Grid item xs={3}>
+          <ProfilePictureContainer alt="Avatar" src={props.props.imgUrl}>
+          </ProfilePictureContainer>
+        </Grid>
+        <Grid item xs={3}>
+          <Box>
+            <p style={NameStyle}>{props.props.name}</p>
+          </Box>
+          <Box>
+            <p style={TextStyle}> {props.props.intro} </p>
+          </Box>
+        </Grid>
+        <Grid item xs={3}>
+          <Box sx={{ marginTop: "115px" }}>
+            <p style={TextStyle}> {props.props.pronouns} </p>
+          </Box>
+        </Grid>
+        <Grid item xs={3}>
+          <Link to="/profileformeditdisplay" style={{ textDecoration: "none" }}>
+            <EditProfileButton>
+              <p> Edit Profile </p>
+            </EditProfileButton>
+          </Link>
+        </Grid>
+      </Grid>
+    );
+  }
+  else {
     return (
         <Grid container spacing={2}>
-            <Grid item xs={3}>
-            <ProfilePictureContainer alt="Avatar" src={ProfilePicture}> </ProfilePictureContainer>
-            </Grid>
-            <Grid item xs={3}>
-                    <Box>
-                        <p style={NameStyle}>Joe Bruin</p>
-                    </Box>
-                    <Box>
-                        <p style={TextStyle}>Lorem ipsum dolor sit amet, 
-                        consectetur adipiscing elit. 
-                        Integer pretium sollicitudin neque id vulputate. 
-                        Sed eget dolor a ligula auctor scelerisque </p>
-                    </Box>
-            </Grid>
-            <Grid item xs={3}> 
-                <Box sx={{marginTop: '115px'}}>
-                    <p style={TextStyle}> pronouns </p>
-                </Box>
-            </Grid>
-            <Grid item xs={3}>
-                <EditProfileButton><p> Edit Profile </p></EditProfileButton>
-            </Grid>
+          <Grid item xs={3}>
+            <ProfilePictureContainer alt="Avatar" src={ProfilePicture}>
+            </ProfilePictureContainer>
+          </Grid>
+          <Grid item xs={3}>
+            <Box>
+              <p style={NameStyle}>{props.props.name}</p>
+            </Box>
+            <Box>
+              <p style={TextStyle}> {props.props.intro} </p>
+            </Box>
+          </Grid>
+          <Grid item xs={3}>
+            <Box sx={{ marginTop: "115px" }}>
+              <p style={TextStyle}> {props.props.pronouns} </p>
+            </Box>
+          </Grid>
+          <Grid item xs={3}>
+            <Link to="/profileformeditdisplay" style={{ textDecoration: "none" }}>
+              <EditProfileButton>
+                <p> Edit Profile </p>
+              </EditProfileButton>
+            </Link>
+          </Grid>
         </Grid>
-
-        
-    
-    )
-}
+      );
+  }
+};
 
 export default NameBlockProfile;

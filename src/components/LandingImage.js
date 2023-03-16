@@ -2,6 +2,7 @@ import styled from 'styled-components'
 import landing_graphic from '../images/graphic-landing.png'
 import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
+import { useNavigate } from 'react-router-dom';
 
 const Landing = styled.div`
     background-color: #EEEEEE;
@@ -50,6 +51,7 @@ const ImgStyle = {
 };
 
 const LandingImage = () => {
+  const navigate = useNavigate();
     return (
         <Landing>
           <Grid container spacing={2}>
@@ -61,8 +63,10 @@ const LandingImage = () => {
                 <Button variant="outlined" 
                 style={{textTransform: 'none'}}
                 sx={{marginTop: 3, gap: 6, padding: '16px 20px', borderRadius: 4, border: '1.5px solid #2B59C3', color: '#2B59C3', width: '43%', height: 56, 
-                fontSize: '62%', lineHeight: 24, letterSpacing: 0.2, fontFamily: 'Poppins', fontStyle: 'normal', fontWeight: 600, alignItems: 'left', display: 'flex'}}>
-                  Join Us</Button>
+                fontSize: '62%', lineHeight: 24, letterSpacing: 0.2, fontFamily: 'Poppins', fontStyle: 'normal', fontWeight: 600, alignItems: 'left', display: 'flex'}}
+                onClick = {() => {navigate("/about")}}
+                >
+                  learn more</Button>
               </p>
             </Grid>
             <Grid item xs={5}>

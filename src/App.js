@@ -14,6 +14,8 @@ import ProfileOtherBackground from "./components/ProfileOtherBackground"
 import { ProtectedRoute } from "./components/ProtectedRoute";
 import { AuthProvider } from "./components/hooks/useAuth";
 import CourseForm from "./components/CoursePage";
+import ProfileBackground from "./components/ProfileBackground";
+import ProfileFormEditDisplay from "./components/profileformeditdisplay.js";
 
 function App() {
   return (
@@ -48,10 +50,26 @@ function App() {
           }
         ></Route>
         <Route
-          path="/profile"
+          path="/profileform"
           element={
             <ProtectedRoute>
               <ProfileForm />
+            </ProtectedRoute>
+          }
+        ></Route>
+        <Route
+          path="/ProfileFormEditDisplay"
+          element={
+            <ProtectedRoute>
+              <ProfileFormEditDisplay/>
+            </ProtectedRoute>
+          }
+        ></Route>
+        <Route
+          path="/profile"
+          element={
+            <ProtectedRoute>
+              <ProfileBackground />
             </ProtectedRoute>
           }
         ></Route>
@@ -60,6 +78,14 @@ function App() {
           element={
             <ProtectedRoute>
               <ProfileOtherBackground />
+            </ProtectedRoute>
+          }
+        ></Route>
+        <Route
+          path="/search/:id"
+          element={
+            <ProtectedRoute>
+              <CourseForm />
             </ProtectedRoute>
           }
         ></Route>

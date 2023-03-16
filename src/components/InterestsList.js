@@ -45,7 +45,6 @@ const InterestsList = (props) => {
 
     function Work (){
         let n1size = props.props.interests.length
-        console.log("what the fuck is worng here?", n1size)
         let arr = []
         for (let i = 0; i < n1size && i < 4; i++ ) {
           arr.push(props.props.interests[i]);
