@@ -84,7 +84,7 @@ const defaultValues = {
 
 const CourseForm = () => {
   let { id } = useParams();
-  console.log(id);
+  // console.log(id);
 
   const [checkValues, setcheckValues] = useState(defaultValues);
   const [students, setStudents] = useState(null);
@@ -94,8 +94,8 @@ const CourseForm = () => {
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        console.log("running use effect from course page");
-        console.log(id);
+        // console.log("running use effect from course page");
+        // console.log(id);
         const otherStudentPromise = getStudentsInClass(
           id
         );
@@ -103,27 +103,28 @@ const CourseForm = () => {
           // @Sujay - the request assumes that every student has a distinct name
           // The value here is an array of students with the name id, but there would\
           // always be only one element because of our assumption.
-          console.log("logging from course page", value);
+          // console.log("logging from course page", value);
           setAllStudentsInCourse(value);
         });
       } else {
-        console.log("Dashboard Err!!");
+        // console.log("Dashboard Err!!");
       }
     });
   }, []);
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log(checkValues);
+    // console.log(checkValues);
 
     //update database
     const course = id; //"CS 35L – Software Construction Lab";
-    console.log(filterUsers(checkValues.years, checkValues.interests, course));
+    // console.log(filterUsers(checkValues.years, checkValues.interests, course));
 
     const promise = filterUsers(
       checkValues.years,
       checkValues.interests,
-      course
+      course,
+      allStudentsInCourse
     );
     promise.then((value) => {
       setStudents(value);

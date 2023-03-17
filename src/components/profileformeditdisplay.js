@@ -128,15 +128,15 @@ const ProfileFormEditDisplay = () => {
   useEffect(() => {
       onAuthStateChanged(auth, (user) => {
         if (user) {
-          console.log("running use effect from profile");
+          // console.log("running use effect from profile");
           const studentPromise = getUserData();
           studentPromise.then((value) => {
-              console.log(value);
+              // console.log(value);
               setStudent(value);
           });
         }
         else {
-          console.log("Dashboard Err!!")
+          // console.log("Dashboard Err!!")
         }
 
       });
@@ -144,7 +144,7 @@ const ProfileFormEditDisplay = () => {
     }, []);
 
 
-  console.log("Checking nullity", student);
+  // console.log("Checking nullity", student);
 
   if (!student) return (<p>Loading...</p>);
 

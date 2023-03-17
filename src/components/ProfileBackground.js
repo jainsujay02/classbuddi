@@ -33,18 +33,18 @@ const HeaderStyle = {
     marginLeft: '125px',
     marginTop: '45px',
     marginBottom: '20px',
-    
+
     fontFamily: 'Poppins',
     fontStyle: 'normal',
     fontWeight: 600,
     fontSize: '22px',
     lineHeight: '72px',
     /* or 327% */
-    
+
     letterSpacing: '-0.25px',
-    
+
     /* black */
-    
+
     color: '#000000',
 }
 
@@ -58,19 +58,19 @@ const ProfileBackground = () => {
     useEffect(() => {
         onAuthStateChanged(auth, (user) => {
           if (user) {
-            console.log("running use effect from profile");
+            // console.log("running use effect from profile");
             const studentPromise = getUserData();
             studentPromise.then((value) => {
-                console.log(value);
+                // console.log(value);
                 setStudent(value);
             });
           }
           else {
-            console.log("Dashboard Err!!")
+            // console.log("Dashboard Err!!")
           }
         });
       }, []);
-    console.log("Checking nullity", student);
+    // console.log("Checking nullity", student);
     if (!student?.name) return (<p>Loading...</p>);
 
     return(
