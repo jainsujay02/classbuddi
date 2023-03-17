@@ -61,7 +61,7 @@ const SocialList = (props) => {
                 label=<p style={SocialText}> Reddit: {props.props.reddit} </p>>
             </SocialChip>
             </a>
-            <a href = {`discordapp.com/users/${props.props.discord}/`}>
+            <a href = {`https://www.discordapp.com/users/${props.props.discord}/`}>
             <SocialChip
             label=<p style={SocialText}> Discord: {props.props.discord} </p>>
         </SocialChip>
