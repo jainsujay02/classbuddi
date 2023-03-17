@@ -373,11 +373,6 @@ export const filterUsers = async (filterYear, filterInterests, filterCourse, stu
 
   //console.log(retList);
 
-  retList.forEach((item) => {
-
-
-  });
-
   const a = []
   for (let item of retList) {
     if (item !== uid){
