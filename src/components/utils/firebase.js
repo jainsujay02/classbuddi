@@ -19,6 +19,8 @@ import {
   getDocs,
 } from "firebase/firestore";
 
+import { getStorage } from "firebase/storage";
+
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -36,6 +38,9 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
+
+// Export storage
+export const storage = getStorage(app);
 
 // Google Auth Implementation
 const provider = new GoogleAuthProvider();
@@ -58,14 +63,14 @@ export const signInWithGoogle = () =>
       // IdP data available using getAdditionalUserInfo(result)
       newUser = getAdditionalUserInfo(result).isNewUser;
 
-      console.log(newUser);
-      console.log(userDetails);
+      //console.log(newUser);
+      //console.log(userDetails);
     })
     .catch((error) => {
       // Handle Errors here.
       // const errorCode = error.code;
       const errorMessage = error.message;
-      console.log(errorMessage);
+      //console.log(errorMessage);
       // The email of the user's account used.
       // const email = error.customData.email;
       // The AuthCredential type that was used.
@@ -92,11 +97,11 @@ export const userSignInStatus = () =>
 export const signOutOfApp = () =>
   signOut(auth)
     .then(() => {
-      console.log("Sign-out successful.");
+      //console.log("Sign-out successful.");
     })
     .catch((error) => {
       // An error happened.
-      console.log(error);
+      //console.log(error);
     });
 
 export const authListener = () => {
@@ -121,7 +126,8 @@ class Student {
     instagram,
     discord,
     reddit,
-    intro
+    intro,
+    imgUrl
   ) {
     this.name = name;
     this.major = major;
@@ -133,6 +139,7 @@ class Student {
     this.discord = discord;
     this.reddit = reddit;
     this.intro = intro;
+    this.imgUrl = imgUrl;
   }
   toString() {
     return (
@@ -173,6 +180,7 @@ const studentConverter = {
       discord: student.discord,
       reddit: student.reddit,
       intro: student.intro,
+      imgUrl: student.imgUrl
     };
   },
   fromFirestore: (snapshot, options) => {
@@ -187,7 +195,8 @@ const studentConverter = {
       data.instagram,
       data.discord,
       data.reddit,
-      data.intro
+      data.intro,
+      data.imgUrl
     );
   },
 };
@@ -200,7 +209,7 @@ onAuthStateChanged(auth, (user) => {
     uid = user.uid;
   }
   else {
-    console.log("Error USER LOGGED OUT");
+    //console.log("Error USER LOGGED OUT");
   }
 });
 
@@ -219,7 +228,8 @@ export const updateUser = (formValues) => {
       formValues.instagram,
       formValues.discord,
       formValues.reddit,
-      formValues.intro
+      formValues.intro,
+      formValues.imgUrl
     )
   );
 };
@@ -236,7 +246,7 @@ export const getUserData = async () => {
     return student;
   } else {
     // doc.data() will be undefined in this case
-    console.log("No such document!");
+    //console.log("No such document!");
   }
 };
 
@@ -247,7 +257,7 @@ export const getStudentsInClass = async (studentCourse) => {
     where("courses", "array-contains", studentCourse)
   ).withConverter(studentConverter);
   const querySnapshot = await getDocs(q);
-  console.log("query complete");
+  //console.log("query complete");
   // console.log(querySnapshot);
   var arr = []
   querySnapshot.forEach((doc) => {
@@ -275,18 +285,23 @@ export const getUserDataFromName = async (id) => {
     // console.log(doc.data());
     const data = doc.data();
     arr.push(data);
-    console.log("Other Student", data);
+    //console.log("Other Student", data);
   });
   return arr;
 };
 
 const dbRef = collection(db, "ProfileFormData");
-export const filterUsers = async (filterYear, filterInterests, filterCourse) => {
+export const filterUsers = async (filterYear, filterInterests, filterCourse, studentsInCourse) => {
   let iList = [];
   let cList = [];
   let yList = [];
   let retList = [];
-
+  // console.log("students in course", studentsInCourse);
+  if (studentsInCourse.length === 0) {
+    // console.log("no students in this course, returning early");
+    alert("Cannot filter students in an empty class");
+    return;
+  }
   if (filterCourse.length !== 0) {
     const c = query(dbRef, where("courses", "array-contains", filterCourse) );
 
@@ -306,7 +321,9 @@ export const filterUsers = async (filterYear, filterInterests, filterCourse) => 
     querySnapshot.forEach((doc) => {
       // doc.data() is never undefined for query doc snapshots
       //console.log(doc.id, " => ", doc.data());
-      iList.push(doc.id)
+      if (cList.includes(doc.id)){
+        iList.push(doc.id);
+      }
     });
   }
   if (filterYear.length !== 0) {
@@ -317,7 +334,9 @@ export const filterUsers = async (filterYear, filterInterests, filterCourse) => 
     querySnapshot.forEach((doc) => {
       // doc.data() is never undefined for query doc snapshots
       //console.log(doc.id, " => ", doc.data());
-      yList.push(doc.id)
+      if (cList.includes(doc.id)){
+        yList.push(doc.id);
+      }
     });
   }
 
@@ -352,7 +371,7 @@ export const filterUsers = async (filterYear, filterInterests, filterCourse) => 
   // Showing all users in course if filtering both empty (default)
   if (filterYear.length === 0 && filterInterests.length === 0) {retList.push(...cList);}
 
-  console.log(retList);
+  //console.log(retList);
 
   retList.forEach((item) => {
 
